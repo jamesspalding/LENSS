@@ -3,25 +3,29 @@
 library(tidyverse)
 ```
 
+Data Cleaning
+
 ```{r}
-#clean data
 kish = read.csv("Data/Kish11-9.csv")
 kish = kish[-c(1:39),1:5]
 kish = kish[-c(1:2),]
-colnames(kish) = c("UTCTime", "LocalTime", "TempC", "Volts", "Mag/Arcsec2") 
+colnames(kish) = c("UTCTime", "LocalTime", "TempC", "Volts", "MagArcsec2") 
 kish = mutate(kish, Hour = hour(kish$LocalTime))
+
+kish$UTCTime = as.ts(kish$UTCTime)
+kish$LocalTime = as.ts(kish$LocalTime)
+kish$TempC = as.numeric(kish$TempC)
+kish$Volts = as.numeric(kish$Volts)
+kish$MagArcsec2 = as.numeric(kish$MagArcsec2)
 
 #remove low volt cases
 kish = kish %>%
-  filter(Volts>4)
+  filter(Volts>4.8)
+```
 
-#####Day/Night#####
+Graphs
 
-#Day cases
-kishDay = kish %>%
-  filter(Hour<18 & Hour>=6)
-
-#Night cases
-kishNight = kish %>%
-  filter(Hour>=18 | Hour<6)
+```{r}
+ggplot(data=kish[c(162:449),], aes(Hour, -MagArcsec2))+
+  geom_smooth()
 ```
