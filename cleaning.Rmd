@@ -1,0 +1,27 @@
+```{r}
+#libraries
+library(tidyverse)
+```
+
+```{r}
+#clean data
+kish = read.csv("Data/Kish11-9.csv")
+kish = kish[-c(1:39),1:5]
+kish = kish[-c(1:2),]
+colnames(kish) = c("UTCTime", "LocalTime", "TempC", "Volts", "Mag/Arcsec2") 
+kish = mutate(kish, Hour = hour(kish$LocalTime))
+
+#remove low volt cases
+kish = kish %>%
+  filter(Volts>4)
+
+#####Day/Night#####
+
+#Day cases
+kishDay = kish %>%
+  filter(Hour<18 & Hour>=6)
+
+#Night cases
+kishNight = kish %>%
+  filter(Hour>=18 | Hour<6)
+```
