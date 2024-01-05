@@ -1,0 +1,171 @@
+Setup
+
+```{r, message = F}
+#libraries
+library(tidyverse)
+library(viridis)
+library(magick)
+library(latex2exp)
+
+#paths
+framePath = paste0(getwd(),"/Images/Frames") #frame location for gif generation
+imgPath = paste0(getwd(),"/Images/") #output location for images
+```
+
+Data Cleaning
+
+```{r, warning = F, echo = F}
+kish = read.csv("Data/Kish11-9.csv")
+kish = kish[-c(1:39),1:5]
+kish = kish[-c(1:2),]
+colnames(kish) = c("UTCTime", "LocalTime", "TempC", "Volts", "MagArcsec2") 
+kish = mutate(kish, Hour = hour(kish$LocalTime), Obs = seq_along(kish$LocalTime)) %>%
+  mutate(DayGroup = ifelse(row_number() >= 162, (row_number() - 161 - 1) %/% 288 + 1, 0))
+
+kish$UTCTime = as.ts(kish$UTCTime)
+kish$LocalTime = as.ts(kish$LocalTime)
+kish$TempC = as.numeric(kish$TempC)
+kish$Volts = as.numeric(kish$Volts)
+kish$MagArcsec2 = as.numeric(kish$MagArcsec2)
+
+#remove low volt cases
+kish = kish %>%
+  filter(Volts>4.8)
+```
+
+Plot Setup
+
+```{r, warning = F, echo = F}
+#Finding start and end values to center at midnight
+#center at midnight, 144 obs each side 143 other
+midnights = which(hour(kish$LocalTime) == 0 & minute(kish$LocalTime) == 0)
+start = c()
+finish = c()
+for(i in 2:113){
+  start[i] = midnights[i] - 144 #noon of day before
+  finish[i] = midnights[i] + 143 #11:55 of day after
+}
+start = start %>% na.omit()
+finish = finish %>% na.omit()
+
+#generating all plots to overlay
+plot = ggplot()
+
+for (i in seq_along(start)) {
+  plotOutput = kish[c(start[i]:finish[i]), ]
+  
+  layer = geom_line(data = plotOutput, aes(x = seq_along(MagArcsec2),
+                                           y = MagArcsec2,
+                                           color = Obs), alpha = 0.5) 
+  
+  plot = plot + layer
+}
+```
+
+Combined Plot
+
+```{r, warning=F, message = F}
+ylabel = TeX("$\\frac{Magnitude}{Arcsec^2}")
+
+plot+
+  ylim(22,5.8)+
+  xlim(50,250)+
+  #bortle scale lines
+  geom_hline(yintercept=21.75, linetype="dashed")+
+  geom_hline(yintercept=21.6, linetype="dashed")+
+  geom_hline(yintercept=21.3, linetype="dashed")+
+  geom_hline(yintercept=20.8, linetype="dashed")+
+  geom_hline(yintercept=20.3, linetype="dashed")+
+  geom_hline(yintercept=19.25, linetype="dashed")+
+  geom_hline(yintercept=18.5, linetype="dashed")+
+  geom_hline(yintercept=18, linetype="dashed")+
+  geom_vline(xintercept=144, linetype="dashed", alpha = .3)+
+  #colors and labels
+  scale_color_viridis_c(option = "viridis", direction = -1)+
+  labs(title = "SQM Readings from 7/19/23 - 11/08/23")+
+  ylab(ylabel)+
+  xlab("")+
+  theme(plot.title = element_text(face = "bold"),
+        legend.position = "none",
+        axis.ticks.x = element_blank(),
+        axis.title.y = element_text(angle = 0, vjust = .5))+
+  scale_x_continuous(breaks = c(72, 144, 216),
+                     labels = c("6:00 P.M.",  "12:00 A.M.",  "6:00 A.M."))
+
+
+```
+
+Animated Plot
+
+```{r}
+#Initially tried gganimate, but couldn't get desired results. Instead used a long and annoying approach of generating each frame individually and creating a gif of them using magick.
+
+
+##### Generate Plots #####
+create_frame = function(start, finish) {
+  plotOutput = kish[c(start:finish), ]
+  startdate = as.Date("2023-07-19")
+  
+  layer = geom_line(data = plotOutput, aes(x = seq_along(MagArcsec2),
+                                           y = MagArcsec2,
+                                           color = Obs), alpha = 0.5)
+
+  ggplot() +
+    layer +
+    labs(title = paste0("SQM Readings from ", as.character(startdate)))+
+    xlab("") +
+    ylab(ylabel) +
+    ylim(22, 5.8) +
+    xlim(50, 250) +
+    geom_vline(xintercept=144, linetype="dashed", alpha = .3)+
+    theme(plot.title = element_text(face = "bold"),
+          legend.position = "none",
+          axis.ticks.x = element_blank(),
+          axis.title.y = element_text(angle = 0, vjust = .5))+
+    scale_x_continuous(breaks = c(72, 144, 216),
+                     labels = c("6:00 P.M.",  "12:00 A.M.",  "6:00 A.M."))
+  
+  startdate = startdate+1
+}
+
+ 
+
+  
+
+
+
+
+
+
+
+
+
+#save frames
+frames = map(seq_along(start), ~ create_frame(start[.x], finish[.x]))
+walk2(frames, seq_along(frames), ~ggsave(file.path(framePath, paste0("frame_", .y, ".png")), .x))
+
+
+##### Create Gif #####
+list.files(path=framePath, pattern = '*.png', full.names = TRUE) %>%
+        image_read() %>%
+        image_join() %>% 
+        image_animate(fps=10) %>% 
+        image_write("Animation.gif", path = imgPath) #Writes to /Images folder (will take a bit)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
