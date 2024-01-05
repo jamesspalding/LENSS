@@ -1,6 +1,7 @@
 ```{r}
 #libraries
 library(tidyverse)
+library(viridis)
 ```
 
 Data Cleaning
@@ -10,7 +11,7 @@ kish = read.csv("Data/Kish11-9.csv")
 kish = kish[-c(1:39),1:5]
 kish = kish[-c(1:2),]
 colnames(kish) = c("UTCTime", "LocalTime", "TempC", "Volts", "MagArcsec2") 
-kish = mutate(kish, Hour = hour(kish$LocalTime))
+kish = mutate(kish, Hour = hour(kish$LocalTime), Obs = seq_along(kish$LocalTime))
 
 kish$UTCTime = as.ts(kish$UTCTime)
 kish$LocalTime = as.ts(kish$LocalTime)
@@ -45,11 +46,17 @@ plot = ggplot()
 for (i in seq_along(start)) {
   plotOutput = kish[c(start[i]:finish[i]), ]
   
-  layer = geom_line(data = plotOutput, aes(x = seq_along(MagArcsec2), y = MagArcsec2, color = i), alpha = 0.5) 
+  layer = geom_line(data = plotOutput, aes(x = seq_along(MagArcsec2),
+                                           y = MagArcsec2,
+                                           color = Obs), alpha = 0.5) 
   
   plot = plot + layer
 }
+```
 
+Combined Plot
+
+```{r, warning=F}
 plot+
   xlab("") +
   ylab("Mag/Arcsec2")+
@@ -62,7 +69,11 @@ plot+
   geom_hline(yintercept=20.3, linetype="dashed")+
   geom_hline(yintercept=19.25, linetype="dashed")+
   geom_hline(yintercept=18.5, linetype="dashed")+
-  geom_hline(yintercept=18, linetype="dashed")
+  geom_hline(yintercept=18, linetype="dashed")+
+  scale_color_viridis_c(option = "viridis", direction = -1)+
+  theme(legend.position = "none")
+
 ```
+
 
 
