@@ -26,6 +26,43 @@ kish = kish %>%
 Graphs
 
 ```{r}
-ggplot(data=kish[c(162:449),], aes(Hour, -MagArcsec2))+
-  geom_smooth()
+#Finding start and end values to center at midnight
+#center at midnight, 144 obs each side 143 other
+midnights = which(hour(kish$LocalTime) == 0 & minute(kish$LocalTime) == 0)
+start = c()
+finish = c()
+for(i in 2:113){
+  start[i] = midnights[i] - 144 #noon of day before
+  finish[i] = midnights[i] + 143 #11:55 of day after
+}
+start = start %>% na.omit()
+finish = finish %>% na.omit()
 ```
+
+```{r, warning = F}
+plot = ggplot()
+
+for (i in seq_along(start)) {
+  plotOutput = kish[c(start[i]:finish[i]), ]
+  
+  layer = geom_line(data = plotOutput, aes(x = seq_along(MagArcsec2), y = MagArcsec2, color = i), alpha = 0.5) 
+  
+  plot = plot + layer
+}
+
+plot+
+  xlab("") +
+  ylab("Mag/Arcsec2")+
+  ylim(22,5.8)+
+  xlim(50,250)+
+  geom_hline(yintercept=21.75, linetype="dashed")+
+  geom_hline(yintercept=21.6, linetype="dashed")+
+  geom_hline(yintercept=21.3, linetype="dashed")+
+  geom_hline(yintercept=20.8, linetype="dashed")+
+  geom_hline(yintercept=20.3, linetype="dashed")+
+  geom_hline(yintercept=19.25, linetype="dashed")+
+  geom_hline(yintercept=18.5, linetype="dashed")+
+  geom_hline(yintercept=18, linetype="dashed")
+```
+
+
