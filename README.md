@@ -16,6 +16,12 @@ into presentable graphs.
 - [ ] make interactive graphs with R shiny
 - [ ] Post graphs on site
 - [ ] Document everything
+- [ ] Integrate weather API and moon cycle + add emojis to plots for visual
+
+*Emojis to use*
+
+* ☀️ 🌤️ 🌥️ ☁️ 🌧️
+* 🌑 🌒 🌓 🌔 🌕 🌖 🌗 🌘
 
 
 ![](https://github.com/jamesspalding/LENSS/blob/main/Images/combinedPlot.png)
