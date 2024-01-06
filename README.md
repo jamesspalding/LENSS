@@ -16,3 +16,8 @@ into presentable graphs.
 - [ ] make interactive graphs with R shiny
 - [ ] Post graphs on site
 - [ ] Document everything
+
+
+![](https://github.com/jamesspalding/LENSS/blob/main/Images/combinedPlot.png)
+
+epic plot
