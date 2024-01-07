@@ -132,8 +132,12 @@ for(i in 1:length(start)){
   n = n+1
   startdate = startdate+1
 }
+```
 
-#Use python to make gif.
+Create gif
+
+```{bash}
+<!-- cd Images/Frames;convert -delay 20 -loop 0 *.png Animation.gif -->
 ```
 
 
