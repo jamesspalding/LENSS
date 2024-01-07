@@ -9,7 +9,7 @@ library(latex2exp)
 
 #paths
 framePath = paste0(getwd(),"/Images/Frames") #frame location for gif generation
-imgPath = paste0(getwd(),"/Images/") #output location for images
+imgPath = paste0(getwd(),"/Images") #output location for images
 ```
 
 Data Cleaning
@@ -101,20 +101,18 @@ plot+
 Animated Plot
 
 ```{r}
-#Initially tried gganimate, but couldn't get desired results. Instead used a long and annoying approach of generating each frame individually and creating a gif of them using magick.
+#Initially tried gganimate, but couldn't get desired results. Instead used a long and annoying approach of generating each frame individually and creating a gif of them using the magick package.
 
+startdate = as.Date("2023-07-19")
+n = 1
 
-##### Generate Plots #####
-create_frame = function(start, finish) {
-  plotOutput = kish[c(start:finish), ]
-  startdate = as.Date("2023-07-19")
+for(i in 1:length(start)){
+  plotDate = kish[c(start[i]:finish[i]), ]
   
-  layer = geom_line(data = plotOutput, aes(x = seq_along(MagArcsec2),
-                                           y = MagArcsec2,
-                                           color = Obs), alpha = 0.5)
-
-  ggplot() +
-    layer +
+  myPlot = ggplot() +
+    geom_line(data = plotDate, aes(x = seq_along(MagArcsec2),
+                                   y = MagArcsec2,
+                                   fill = "black"))+
     labs(title = paste0("SQM Readings from ", as.character(startdate)))+
     xlab("") +
     ylab(ylabel) +
@@ -128,35 +126,15 @@ create_frame = function(start, finish) {
     scale_x_continuous(breaks = c(72, 144, 216),
                      labels = c("6:00 P.M.",  "12:00 A.M.",  "6:00 A.M."))
   
+  frameName = paste0("frame_", as.character(n), ".png")
+  ggsave(frameName, plot = myPlot, path = framePath, width = 10.67, height = 6)
+  
+  n = n+1
   startdate = startdate+1
 }
 
- 
-
-  
-
-
-
-
-
-
-
-
-
-#save frames
-frames = map(seq_along(start), ~ create_frame(start[.x], finish[.x]))
-walk2(frames, seq_along(frames), ~ggsave(file.path(framePath, paste0("frame_", .y, ".png")), .x))
-
-
-##### Create Gif #####
-list.files(path=framePath, pattern = '*.png', full.names = TRUE) %>%
-        image_read() %>%
-        image_join() %>% 
-        image_animate(fps=10) %>% 
-        image_write("Animation.gif", path = imgPath) #Writes to /Images folder (will take a bit)
+#Use python to make gif.
 ```
-
-
 
 
 
