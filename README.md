@@ -5,16 +5,19 @@ into presentable graphs.
 
 ## TODOs
 
-- [x] filter out <4.8 volts
-- [ ] figure out how mag/arcsec^2 works
-- [ ] moonlight library
-- [ ] Implement categorization of data according to [bortle
-  scale](https://en.wikipedia.org/wiki/Bortle_scale)
+#### Àngel
+
+- [ ] Figure out how mag/arcsec^2 works
+- [ ] Moonlight library
 - [ ] Get library for astronomical twilight at $-18^\circ$
-- [ ] pipe data through scripts to generate plots (images and gifs)
-  automatically
-- [ ] make interactive graphs with R shiny
-- [ ] Post graphs on site
+- [ ] Pipe data through scripts to automatically create .csv files
+- [ ] Create website
+
+#### James
+
+- [x] Filter out <4.8 volts
+- [ ] Implement categorization of data according to [bortle scale](https://en.wikipedia.org/wiki/Bortle_scale)
+- [ ] Make interactive graphs with R shiny
 - [ ] Document everything
 - [ ] Integrate weather API and moon cycle + add emojis to plots for visual
 
