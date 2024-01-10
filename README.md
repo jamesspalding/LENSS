@@ -26,4 +26,12 @@ into presentable graphs.
 
 ![](https://github.com/jamesspalding/LENSS/blob/main/Images/combinedPlot.png)
 
-epic plot
+Plot of all dates
+
+![](https://github.com/jamesspalding/LENSS/blob/main/Images/Animation.gif)
+
+Animation of all dates
+
+![](https://github.com/jamesspalding/LENSS/blob/main/Images/maxSQM2023-09-26.png)
+
+Plot with the max SQM reading on the Y axis
