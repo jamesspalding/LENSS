@@ -5,10 +5,13 @@ Setup
 library(tidyverse)
 library(viridis)
 library(latex2exp)
+library(magick)
+library(rvest)
 
 #paths
 framePath = paste0(getwd(),"/Images/Frames") #frame location for gif generation
 imgPath = paste0(getwd(),"/Images") #output location for images
+iconPath = paste0(getwd(),"/Images/Icons") #location of emojis for moon and weather
 ```
 
 Data Cleaning
@@ -30,6 +33,15 @@ kish$MagArcsec2 = as.numeric(kish$MagArcsec2)
 #remove low volt cases
 kish = kish %>%
   filter(Volts>4.8)
+
+
+#---------- TODO: Attach moon phases to csv ----------#
+#data from https://www.timeanddate.com/moon/phases/@5279098?year=2023
+
+#july17-nov5
+dates = c("2023-07-17", "2023-07-25", "2023-08-1", "2023-08-08", "2023-08-16", "2023-08-24", "2023-08-30", "2023-09-6", "2023-09-14", "2023-09-22", "2023-09-29", "2023-10-6", "2023-10-14", "2023-10-21", "2023-10-28", "2023-11-05")
+phases = c(0,2,4,6,0,2,4,6,0,2,4,6,0,2,4,6)
+
 ```
 
 Plot Setup
@@ -120,7 +132,7 @@ for(i in 1:length(start)){
     geom_line(data = plotDate, aes(x = seq_along(MagArcsec2),
                                    y = MagArcsec2,
                                    fill = "black"))+
-    labs(title = paste0("SQM Readings from ", as.character(startdate)))+
+    labs(title = paste0("SQM Readings from ", as.character(startdate), " to ", as.character(startdate + 1)))+
     xlab("") +
     ylab(ylabel) +
     ylim(22, 5.8) +
@@ -156,10 +168,13 @@ Variable Y axis
 * Maybe use this to show the bortle rating?
 * Input date, output graph
 
-SQMgraph(date, output)
+SQMgraph(date, save = T/F)
 
 ```{r, warning = F}
-SQMgraph = function(givenDate, output = F){
+
+moonPNG = image_read(paste0(iconPath, "/moon0.png"))
+
+SQMgraph = function(givenDate, save = F){
   
 #----- Work on error handling -----#
   
@@ -178,7 +193,7 @@ SQMgraph = function(givenDate, output = F){
   plotDate = kish[c(start[numMid]:finish[numMid]), ]
   maxSQM = max(plotDate$MagArcsec2)
   
-  #Handling ordering
+  #ordering
   labelList = c()
   breakList = c()
   if(maxSQM > 20){
@@ -203,11 +218,12 @@ SQMgraph = function(givenDate, output = F){
   }
   
   
+  #Plot creation
   myPlot = ggplot() +
     geom_line(data = plotDate, aes(x = seq_along(MagArcsec2),
                                    y = MagArcsec2,
                                    fill = "black"))+
-    labs(title = paste0("SQM Readings from ", as.character(givenDate)))+
+    labs(title = paste0("SQM Readings from ", as.character(givenDate), " to ", as.character(as.Date(givenDate)+1)))+
     xlab("") +
     ylab(ylabel) +
     geom_vline(xintercept=144, linetype="dashed", alpha = .3)+ #midnight
@@ -222,18 +238,25 @@ SQMgraph = function(givenDate, output = F){
                        labels = labelList,
                        limits = c(22, 5.8),
                        trans = "reverse")+
-
     coord_cartesian(xlim = c(50, 250))
   
-  if(output == T){ #output as png
-    outputName = paste0("maxSQM", as.character(givenDate), ".png")
-    ggsave(outputName, plot = myPlot, path = imgPath, width = 10.67, height = 6)
+  
+  #Moon phase and weather
+  ggsave("temp.png", plot = myPlot, path = imgPath, width = 10.67, height = 6)
+  background = image_read(paste0(imgPath, "/temp.png"))
+  moonPlot = image_composite(background, moonPNG, offset = "+75+50")
+  
+  
+  #saving
+  if(save == T){
+    outputName = paste0("/maxSQM", as.character(givenDate), ".png")
+    image_write(moonPlot, paste0(imgPath, outputName))
   }
   
-  return(myPlot)
+  return(moonPlot)
 }
 
-#SQMgraph("2023-07-25")
+SQMgraph("2023-09-26", save = T)
 ```
 
 
