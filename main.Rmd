@@ -265,7 +265,7 @@ SQMgraph("2023-09-26", save = T)
 Export via shinylive
 
 ```{r}
-shinylive::export("App", "docs")
+#shinylive::export("App", "docs")
 ```
 
 
