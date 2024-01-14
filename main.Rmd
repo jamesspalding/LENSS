@@ -7,6 +7,8 @@ library(viridis)
 library(latex2exp)
 library(magick)
 library(rvest)
+library(shinylive)
+library(httpuv)
 
 #paths
 framePath = paste0(getwd(),"/Images/Frames") #frame location for gif generation
@@ -260,7 +262,11 @@ SQMgraph = function(givenDate, save = F){
 SQMgraph("2023-09-26", save = T)
 ```
 
+Export via shinylive
 
+```{r}
+shinylive::export("App", "docs")
+```
 
 
 
