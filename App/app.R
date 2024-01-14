@@ -1,4 +1,4 @@
-source("functions.R")) #already sources setup.R, so no need to load again.
+source("functions.R") #already sources setup.R, so no need to load again.
 
 ui = fluidPage(
   titlePanel("LENSS Graphs"),
