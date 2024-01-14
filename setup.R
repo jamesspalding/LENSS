@@ -5,6 +5,13 @@ library(latex2exp)
 library(magick)
 library(rvest)
 
+# library(pak)
+# pak::pak("posit-dev/r-shinylive")
+
+library(shiny)
+library(shinylive)
+library(httpuv)
+
 #paths
 framePath = paste0(getwd(),"/Images/Frames") #frame location for gif generation
 imgPath = paste0(getwd(),"/Images") #output location for images
