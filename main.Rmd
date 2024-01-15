@@ -259,7 +259,7 @@ SQMgraph = function(givenDate, save = F){
   return(moonPlot)
 }
 
-SQMgraph("2023-09-26", save = T)
+SQMgraph("2023-09-26", save = T) 
 ```
 
 Export via shinylive
