@@ -89,7 +89,7 @@ buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, save = F){
   if(bortle == T){
     
     myPlot = myPlot +
-      #City (9-7)
+      #Urban (9-7)
       geom_rect(aes(xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = 18.5),
                 alpha = .15,
                 fill = "red") + 
@@ -102,8 +102,15 @@ buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, save = F){
       #Rural (4-1)
       geom_rect(aes(xmin = -Inf, xmax = Inf, ymin = 20.8, ymax = Inf),
                 alpha = .15,
-                fill = "blue")
+                fill = "blue") +
     
+      #Labels
+      annotate("text", x=252, y=6, label= "Urban")+
+      
+      annotate("text", x=248.5, y=18.8, label= "Suburban")+
+      
+      annotate("text", x=252, y=21.15, label= "Rural")
+      
       outputName = paste0(outputName, "_bortle")
   }
   
@@ -117,4 +124,4 @@ buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, save = F){
 }
 
 ##### Usage #####
-#buildGraph("2023-10-10", sqm = F, bortle = T, midLine = T, save = T)
+buildGraph("2023-10-10", sqm = F, bortle = T, midLine = T, save = F)
