@@ -46,3 +46,7 @@ Animation of all dates
 ![](https://github.com/jamesspalding/LENSS/blob/main/Images/maxSQM2023-09-26.png)
 
 Plot with the max SQM reading on the Y axis
+
+![](https://github.com/jamesspalding/LENSS/blob/main/Images/plot_2023-10-10_mid_maxsqm_bortle.png)
+
+Plot with Bortle scale overlaid
