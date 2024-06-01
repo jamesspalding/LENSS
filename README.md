@@ -16,8 +16,8 @@ into presentable graphs.
 #### James
 
 - [x] Filter out <4.8 volts
-- [ ] Implement categorization of data according to [bortle scale](https://en.wikipedia.org/wiki/Bortle_scale)
-- [ ] Make interactive graphs with R shiny
+- [x] Implement categorization of data according to [bortle scale](https://en.wikipedia.org/wiki/Bortle_scale)
+- [x] Make interactive graphs with R shiny
 - [ ] Document everything
 - [ ] Integrate weather API and moon cycle + add emojis to plots for visual
 
@@ -26,6 +26,14 @@ into presentable graphs.
 * ☀️ 🌤️ 🌥️ ☁️ 🌧️
 * 🌑 🌒 🌓 🌔 🌕 🌖 🌗 🌘
 
+#### Website idea
+
+- Transfer data
+- Automatically generate "frames" for each day
+- Upload to image folder
+- Automatically be added to interactive slider
+
+## Outputs
 
 ![](https://github.com/jamesspalding/LENSS/blob/main/Images/combinedPlot.png)
 
