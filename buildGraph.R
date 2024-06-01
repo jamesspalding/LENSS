@@ -1,4 +1,4 @@
-source("setup.R")
+#Requires source("setup.R") before running
 
 
 ##### Build graphs for shiny app #####
@@ -11,6 +11,7 @@ buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, save = F){
                                       minute(kish$LocalTime) == 0))
   plotDate = kish[c(start[givenMid]:finish[givenMid]), ]
   maxSQM = max(plotDate$MagArcsec2)
+  outputName = paste0("/plot_", as.character(givenDate))
 
 
   ##### Base Plot #####
@@ -36,6 +37,8 @@ buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, save = F){
   if(midLine == T){
     myPlot = myPlot + 
       geom_vline(xintercept=144, linetype="dashed", alpha = .3)
+    
+    outputName = paste0(outputName, "_mid")
   }
 
   
@@ -77,7 +80,8 @@ buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, save = F){
                                   limits = c(22, 5.8),
                                   trans = "reverse")+
                geom_hline(yintercept = maxSQM, linetype="dashed", alpha=.3)
-
+    
+    outputName = paste0(outputName, "_maxsqm")
   }
 
 
@@ -99,20 +103,18 @@ buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, save = F){
       geom_rect(aes(xmin = -Inf, xmax = Inf, ymin = 20.8, ymax = Inf),
                 alpha = .15,
                 fill = "blue")
+    
+      outputName = paste0(outputName, "_bortle")
   }
   
   
-  ##### Saving output #####
+  ##### Output #####
   if(save == T){
-    outputName = paste0("/maxSQM", as.character(givenDate), ".png")
-    image_write(myPlot, paste0(imgPath, outputName))
+    ggsave(filename = paste0(imgPath, outputName, ".png"), plot = myPlot)
   }
   
-  
-  ##### Plot Output #####
-  print(myPlot)
-  return()
+  return(myPlot)
 }
 
 ##### Usage #####
-# buildGraph("2023-10-10", sqm = F, bortle = T, midLine = T)
+#buildGraph("2023-10-10", sqm = F, bortle = T, midLine = T, save = T)
