@@ -171,6 +171,3 @@ bortleGraph = function(givenDate, save = F){
   
   myPlot
 }
-
-
-bortleGraph("2023-10-10")
