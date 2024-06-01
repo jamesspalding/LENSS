@@ -2,7 +2,7 @@
 
 
 ##### Build graphs for shiny app #####
-buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, save = F){
+buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, save = F, size = c(3201,1800)){
   
   
   ##### Values #####
@@ -117,11 +117,15 @@ buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, save = F){
   
   ##### Output #####
   if(save == T){
-    ggsave(filename = paste0(imgPath, outputName, ".png"), plot = myPlot)
+    ggsave(filename = paste0(imgPath, outputName, ".png"),
+           plot = myPlot,
+           width = size[1],
+           height = size[2],
+           units = "px")
   }
   
   return(myPlot)
 }
 
 ##### Usage #####
-buildGraph("2023-10-10", sqm = F, bortle = T, midLine = T, save = F)
+#buildGraph("2023-10-10", sqm = T, bortle = T, midLine = T, save = T)
