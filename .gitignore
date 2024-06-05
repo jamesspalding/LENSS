@@ -1,5 +1,16 @@
+# R
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
+
+# Mac
 **/.DS_Store
+
+# python astro
+de421.bsp
+
+# virtualenv
+/pyvenv.cfg
+/bin
+/lib
