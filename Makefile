@@ -12,3 +12,12 @@ alpine:
 	R -e 'install.packages("archive", repos="http://cran.us.r-project.org")'
 	R -e 'install.packages("shinylive", repos="http://cran.us.r-project.org")'
 	R -e 'install.packages("shinydashboard", repos="http://cran.us.r-project.org")'
+
+virtenv:
+	virtualenv --download .
+	. ./bin/activate
+	pip install skyfield
+
+moon:
+	. ./bin/activate
+	./moon.py
