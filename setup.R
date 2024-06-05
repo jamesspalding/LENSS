@@ -1,21 +1,31 @@
-#libraries
+
+
+##### data/presentation #####
 library(tidyverse)
 library(viridis)
 library(latex2exp)
 library(magick)
-library(rvest)
 
-# library(pak)
-# pak::pak("posit-dev/r-shinylive")
+##### web scraping #####
+library(httr)
 
+##### Shiny #####
 library(shiny)
 library(shinylive)
+library(shinydashboard)
 library(httpuv)
 
-#paths
+
+##### Functions #####
+source("buildGraph.R")
+source("moon_phase.R")
+
+
+##### paths #####
 framePath = paste0(getwd(),"/Images/Frames") #frame location for gif generation
 imgPath = paste0(getwd(),"/Images") #output location for images
 iconPath = paste0(getwd(),"/Images/Icons") #location of emojis for moon and weather
+
 
 ##### data cleaning #####
 kish = read.csv("Data/Kish11-9.csv")
@@ -34,13 +44,6 @@ kish$MagArcsec2 = as.numeric(kish$MagArcsec2)
 kish = kish %>%
    filter(Volts > 4.8)
 
- 
-#---------- TODO: Attach moon phases to csv ----------#
-#data from https://www.timeanddate.com/moon/phases/@5279098?year=2023
-
-#july17-nov5
-# dates = c("2023-07-17", "2023-07-25", "2023-08-1", "2023-08-08", "2023-08-16", "2023-08-24", "2023-08-30", "2023-09-6", "2023-09-14", "2023-09-22", "2023-09-29", "2023-10-6", "2023-10-14", "2023-10-21", "2023-10-28", "2023-11-05")
-# phases = c(0,2,4,6,0,2,4,6,0,2,4,6,0,2,4,6)
 
 ##### plot setup #####
   #Finding start and end values to center at midnight
