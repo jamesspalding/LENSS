@@ -1,4 +1,4 @@
-library("httr")
+library(httr)
 
 moon_phase <- function(date) {
   host <- "https://wttr.in"
@@ -9,5 +9,5 @@ moon_phase <- function(date) {
   return(content)
 }
 
-moon <- moon_phase("2023-11-01")
-print(moon)
+# moon <- moon_phase("2023-11-01")
+# print(moon)
