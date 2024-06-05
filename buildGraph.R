@@ -1,5 +1,4 @@
-#Requires source("setup.R") before running
-
+library(tidyverse)
 
 ##### Build graphs for shiny app #####
 buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, save = F, size = c(3201,1800)){
