@@ -1,5 +1,6 @@
 run:
 	Rscript app.R
+.PHONY: run
 
 alpine:
 	sudo apk install R R-dev libjpeg tiff-dev imagemagick-dev libarchive-dev
@@ -12,12 +13,15 @@ alpine:
 	R -e 'install.packages("archive", repos="http://cran.us.r-project.org")'
 	R -e 'install.packages("shinylive", repos="http://cran.us.r-project.org")'
 	R -e 'install.packages("shinydashboard", repos="http://cran.us.r-project.org")'
+.PHONY: alpine
 
 virtenv:
 	virtualenv --download .
 	. ./bin/activate
 	pip install skyfield
+.PHONY: virtenv
 
 moon:
 	. ./bin/activate
 	./moon.py
+.PHONY: moon
