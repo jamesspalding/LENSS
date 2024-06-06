@@ -6,10 +6,11 @@ ui = dashboardPage(
   dashboardBody(
     fluidRow(
       
-      
-      ##### Input card #####
+      ##### Left Column #####
       column(
         width = 4,
+        
+        ##### Input card #####
         box(
           title = "Controls",
           status = "primary",
@@ -27,6 +28,7 @@ ui = dashboardPage(
         )
       ),
       
+      ##### Right Column #####
       column(
         width = 8,
         
@@ -62,6 +64,8 @@ ui = dashboardPage(
 
 server = function(input, output, session) {
   
+  
+  ##### plot #####
   output$result_plot = renderPlot({
     sqmVal = input$sqmCheck
     midVal = input$midCheck
@@ -70,8 +74,17 @@ server = function(input, output, session) {
     buildGraph(as.Date(input$input_date), midVal, sqmVal, bortleVal)
   })
   
+  
+  ##### phase emoji #####
   output$phaseEmoji = renderText({
-    moon_phase(as.Date(input$input_date))
+    phaseDate = as.character(input$input_date)
+      phaseY = as.numeric(strsplit(phaseDate,"-")[[1]][1])
+      phaseM = as.numeric(strsplit(phaseDate,"-")[[1]][2])
+      phaseD = as.numeric(strsplit(phaseDate,"-")[[1]][3])
+    
+    moon_emoji(
+      moon_phase(phaseY, phaseM, phaseD)
+    )
   })
   
 }
