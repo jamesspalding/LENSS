@@ -35,7 +35,7 @@ def parse_iso8601(date):
   year, month, day = map(int, date.split('-'))
   return year, month, day
 
-christmas = "2023-12-25"
-year, month, day = parse_iso8601(christmas)
-phase = moon_phase(year, month, day)
-print('Moon phase: {:.1f} degrees with emoji '.format(phase) + moon_emoji(phase))
+# christmas = "2023-12-25"
+# year, month, day = parse_iso8601(christmas)
+# phase = moon_phase(year, month, day)
+# print('Moon phase: {:.1f} degrees with emoji '.format(phase) + moon_emoji(phase))
