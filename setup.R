@@ -1,4 +1,5 @@
-
+# SPDX-FileCopyrightText: 2024 GLAS Education <angel@glaseducation.org>
+# SPDX-License-Identifier: AGPL-3.0-only
 
 ##### data/presentation #####
 library(tidyverse)

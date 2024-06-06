@@ -1,4 +1,6 @@
 #!./bin/python3
+# SPDX-FileCopyrightText: 2024 GLAS Education <angel@glaseducation.org>
+# SPDX-License-Identifier: AGPL-3.0-only
 
 from skyfield import almanac
 from skyfield.api import load

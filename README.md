@@ -1,3 +1,5 @@
+<!-- SPDX-FileCopyrightText: 2024 GLAS Education <angel@glaseducation.org> -->
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
 # LENSS
 
 Project to turn LENSS data from [GLAS Education](https://glaseducation.org)
@@ -50,3 +52,8 @@ Plot with the max SQM reading on the Y axis
 ![](https://github.com/jamesspalding/LENSS/blob/main/Images/plot_2023-10-10_mid_maxsqm_bortle.png)
 
 Plot with Bortle scale overlaid
+
+## LICENSES
+
+This code is under the GNU AGPL 3.0 open source license. Our data is provided by
+our LENSS project sensor and is under the ODbL open sharealike database license.
