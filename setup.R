@@ -6,20 +6,24 @@ library(viridis)
 library(latex2exp)
 library(magick)
 
-##### web scraping #####
-library(httr)
-
 ##### Shiny #####
 library(shiny)
 library(shinylive)
 library(shinydashboard)
 library(httpuv)
 
+##### python #####
+library(reticulate)
+#needs to run when R session starts, but cannot be run multiple times or causes error
+# use_virtualenv(paste0(getwd(),"/.venv"), required=T)
+# use_python(paste0(getwd(),'/.venv'))
+
+##### web scraping #####
+library(httr)
 
 ##### Functions #####
 source("buildGraph.R")
-source("moon_phase.R")
-
+source_python("moon.py")
 
 ##### paths #####
 framePath = paste0(getwd(),"/Images/Frames") #frame location for gif generation
