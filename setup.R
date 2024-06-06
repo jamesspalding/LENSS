@@ -36,7 +36,7 @@ iconPath = paste0(getwd(),"/Images/Icons") #location of emojis for moon and weat
 kish = read.csv("Data/Kish11-9.csv")
 kish = kish[-c(1:39),1:5]
 kish = kish[-c(1:2),]
-colnames(kish) = c("UTCTime", "LocalTime", "TempC", "Volts", "MagArcsec2") 
+colnames(kish) = c("UTCTime", "LocalTime", "TempC", "Volts", "MagArcsec2")
 kish = mutate(kish, Hour = hour(kish$LocalTime), Obs = seq_along(kish$LocalTime))
 
 kish$UTCTime = as.ts(kish$UTCTime)

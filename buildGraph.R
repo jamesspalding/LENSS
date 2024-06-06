@@ -4,8 +4,8 @@ library(tidyverse)
 
 ##### Build graphs for shiny app #####
 buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, save = F, size = c(3201,1800)){
-  
-  
+
+
   ##### Values #####
   givenMid = which(midnights == which(date(kish$LocalTime) == givenDate &
                                       hour(kish$LocalTime) == 0 &
@@ -33,89 +33,89 @@ buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, save = F, siz
                          labels = c("6:00 P.M.",  "12:00 A.M.",  "6:00 A.M."))+
       coord_cartesian(xlim = c(50, 250))
 
-  
+
   ##### Midnight line #####
   if(midLine == T){
-    myPlot = myPlot + 
+    myPlot = myPlot +
       geom_vline(xintercept=144, linetype="dashed", alpha = .3)
-    
+
     outputName = paste0(outputName, "_mid")
   }
 
-  
+
   ##### Max SQM Readings #####
   if(sqm == T){
-    
+
     labelList = c()
     breakList = c()
-    
+
     #Ordering for breaks
     if(maxSQM > 20){
       labelList = c(as.character(maxSQM), "", "15", "10", "5")
       breakList = c(maxSQM, 20, 15, 10, 5)
     }
-    
+
     if(maxSQM > 15 & maxSQM <= 20){
       labelList = c("", as.character(maxSQM), "15", "10", "5")
       breakList = c(20, maxSQM, 15, 10, 5)
     }
-    
+
     if(maxSQM > 10 & maxSQM <= 15){
       labelList = c("20", "15", as.character(maxSQM), "10", "5")
       breakList = c(20, 15, maxSQM, 10, 5)
     }
-    
+
     if(maxSQM > 5 & maxSQM <= 10){
-      labelList = c("20", "15", "10", as.character(maxSQM), "5")  
+      labelList = c("20", "15", "10", as.character(maxSQM), "5")
       breakList = c(20, 15, 10, maxSQM, 5)
     }
-    
+
     if(maxSQM <= 10){
       labelList = c("20", "15", "10", "5", as.character(maxSQM))
       breakList = c(20, 15, 10, 5, maxSQM)
     }
-    
+
     myPlot = myPlot+
                scale_y_continuous(breaks = breakList,
                                   labels = labelList,
                                   limits = c(22, 5.8),
                                   trans = "reverse")+
                geom_hline(yintercept = maxSQM, linetype="dashed", alpha=.3)
-    
+
     outputName = paste0(outputName, "_maxsqm")
   }
 
 
   ##### Bortle Overlay #####
   if(bortle == T){
-    
+
     myPlot = myPlot +
       #Urban (9-7)
       geom_rect(aes(xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = 18.5),
                 alpha = .15,
-                fill = "red") + 
-  
+                fill = "red") +
+
       #Suburban (6-4.5)
       geom_rect(aes(xmin = -Inf, xmax = Inf, ymin = 18.5, ymax = 20.8),
                 alpha = .15,
-                fill = "purple") + 
-      
+                fill = "purple") +
+
       #Rural (4-1)
       geom_rect(aes(xmin = -Inf, xmax = Inf, ymin = 20.8, ymax = Inf),
                 alpha = .15,
                 fill = "blue") +
-    
+
       #Labels
       annotate("text", x=252, y=6, label= "Urban")+
-      
+
       annotate("text", x=248.5, y=18.8, label= "Suburban")+
-      
+
       annotate("text", x=252, y=21.15, label= "Rural")
-      
+
       outputName = paste0(outputName, "_bortle")
   }
-  
-  
+
+
   ##### Output #####
   if(save == T){
     ggsave(filename = paste0(imgPath, outputName, ".png"),
@@ -124,7 +124,7 @@ buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, save = F, siz
            height = size[2],
            units = "px")
   }
-  
+
   return(myPlot)
 }
 
