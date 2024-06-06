@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2024 GLAS Education <angel@glaseducation.org>
+# SPDX-License-Identifier: AGPL-3.0-only
+
 run:
 	Rscript app.R
 .PHONY: run
@@ -14,6 +17,10 @@ alpine:
 	R -e 'install.packages("shinylive", repos="http://cran.us.r-project.org")'
 	R -e 'install.packages("shinydashboard", repos="http://cran.us.r-project.org")'
 .PHONY: alpine
+
+lint:
+	reuse lint
+.PHONY: lint
 
 virtenv:
 	virtualenv --download .
