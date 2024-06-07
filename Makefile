@@ -5,8 +5,11 @@ run:
 	Rscript app.R
 .PHONY: run
 
-alpine:
-	sudo apk install R R-dev libjpeg tiff-dev imagemagick-dev libarchive-dev
+apk:
+	doas apk add R R-dev libjpeg tiff-dev imagemagick-dev libarchive-dev
+.PHONY: alpine
+
+r-libs:
 	R -e 'install.packages("tidyverse", repos="http://cran.us.r-project.org")'
 	R -e 'install.packages("viridis", repos="http://cran.us.r-project.org")'
 	R -e 'install.packages("viridisLite", repos="http://cran.us.r-project.org")'
@@ -17,6 +20,10 @@ alpine:
 	R -e 'install.packages("shinylive", repos="http://cran.us.r-project.org")'
 	R -e 'install.packages("shinydashboard", repos="http://cran.us.r-project.org")'
 	R -e 'install.packages("reticulate", repos="http://cran.us.r-project.org")'
+.PHONY: r-libs
+
+alpine: apk r-libs
+	echo "done!"
 .PHONY: alpine
 
 lint:
