@@ -16,19 +16,20 @@ alpine:
 	R -e 'install.packages("archive", repos="http://cran.us.r-project.org")'
 	R -e 'install.packages("shinylive", repos="http://cran.us.r-project.org")'
 	R -e 'install.packages("shinydashboard", repos="http://cran.us.r-project.org")'
+	R -e 'install.packages("reticulate", repos="http://cran.us.r-project.org")'
 .PHONY: alpine
 
 lint:
 	reuse lint
 .PHONY: lint
 
-virtenv:
-	virtualenv --download .
-	. ./bin/activate
+venv:
+	virtualenv --download ./.venv
+	. ./.venv/bin/activate
 	pip install skyfield
 .PHONY: virtenv
 
 moon:
-	. ./bin/activate
+	. ./.venv/bin/activate
 	./moon.py
 .PHONY: moon
