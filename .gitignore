@@ -14,6 +14,4 @@
 de421.bsp
 
 # virtualenv
-/pyvenv.cfg
-/bin
-/lib
+/.venv
