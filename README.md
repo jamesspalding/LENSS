@@ -1,6 +1,6 @@
 <!-- SPDX-FileCopyrightText: 2024 GLAS Education <angel@glaseducation.org> -->
 <!-- SPDX-License-Identifier: AGPL-3.0-only -->
-# LENSS
+# LENSS Graphs Site
 
 Project to turn LENSS data from [GLAS Education](https://glaseducation.org)
 into presentable graphs.
@@ -9,11 +9,12 @@ into presentable graphs.
 
 #### Àngel
 
-- [ ] Figure out how mag/arcsec^2 works
-- [ ] Moonlight library
-- [ ] Get library for astronomical twilight at $-18^\circ$
+- [ ] Write mag/arcsecond^2 about section
+- [x] Moon phase library
+- [ ] Set up skyfield for twilight calculation times at -18° angle
 - [ ] Pipe data through scripts to automatically create .csv files
 - [ ] Create website
+- [ ] Integrate open-meteo.com weather API
 
 #### James
 
@@ -21,7 +22,6 @@ into presentable graphs.
 - [x] Implement categorization of data according to [bortle scale](https://en.wikipedia.org/wiki/Bortle_scale)
 - [x] Make interactive graphs with R shiny
 - [ ] Document everything
-- [ ] Integrate weather API and moon cycle + add emojis to plots for visual
 
 *Emojis to use*
 
@@ -34,6 +34,8 @@ into presentable graphs.
 - Automatically generate "frames" for each day
 - Upload to image folder
 - Automatically be added to interactive slider
+- "What is twilight?" section
+- Map of light pollution in US
 
 ## Outputs
 
