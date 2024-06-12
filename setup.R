@@ -24,7 +24,9 @@ library(httr)
 
 ##### Functions #####
 source("buildGraph.R")
+source("makeGif.R")
 source_python("moon.py")
+source_python("animateFrames.py")
 
 ##### paths #####
 framePath = paste0(getwd(),"/Images/Frames") #frame location for gif generation
