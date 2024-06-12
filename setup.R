@@ -23,10 +23,10 @@ library(reticulate)
 library(httr)
 
 ##### Functions #####
-source("buildGraph.R")
-source("makeGif.R")
 source_python("moon.py")
 source_python("animateFrames.py")
+source("buildGraph.R")
+source("makeGif.R")
 
 ##### paths #####
 framePath = paste0(getwd(),"/Images/Frames") #frame location for gif generation
