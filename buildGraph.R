@@ -3,7 +3,7 @@
 library(tidyverse)
 
 ##### Build graphs for shiny app #####
-buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, save = F, size = c(3201,1800)){
+buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, phase = F, save = F, size = c(3201,1800)){
 
 
   ##### Values #####
@@ -115,6 +115,19 @@ buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, save = F, siz
       outputName = paste0(outputName, "_bortle")
   }
 
+  
+  # Emoji does not work. Need to use a png if wanted to be included within graph.
+  # if(phase == T){
+  #     phaseDate = as.character(givenDate)
+  #     phaseY = as.numeric(strsplit(phaseDate,"-")[[1]][1])
+  #     phaseM = as.numeric(strsplit(phaseDate,"-")[[1]][2])
+  #     phaseD = as.numeric(strsplit(phaseDate,"-")[[1]][3])
+  #     phaseEmoji = moon_emoji(moon_phase(phaseY, phaseM, phaseD))
+  #   
+  #   myPlot = myPlot +
+  #     annotate("text", x=252, y=21.15, label= phaseEmoji)
+  # }
+  
 
   ##### Output #####
   if(save == T){
@@ -129,4 +142,4 @@ buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, save = F, siz
 }
 
 ##### Usage #####
-#buildGraph("2023-10-10", sqm = T, bortle = T, midLine = T, save = T)
+#buildGraph("2023-10-10", phase = T)
