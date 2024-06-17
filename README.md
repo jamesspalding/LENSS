@@ -22,11 +22,7 @@ into presentable graphs.
 - [x] Implement categorization of data according to [bortle scale](https://en.wikipedia.org/wiki/Bortle_scale)
 - [x] Make interactive graphs with R shiny
 - [ ] Redo X scale to reference actual time (instead of fixed numbers) to account for daylight savings
-
-*Emojis to use*
-
-* ☀️ 🌤️ 🌥️ ☁️ 🌧️
-* 🌑 🌒 🌓 🌔 🌕 🌖 🌗 🌘
+- [ ] Improve efficiency?
 
 #### Website idea
 
