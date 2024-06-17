@@ -6,6 +6,7 @@ library(tidyverse)
 library(viridis)
 library(latex2exp)
 library(magick)
+library(png)
 
 ##### Shiny #####
 library(shiny)
