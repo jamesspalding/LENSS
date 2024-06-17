@@ -21,7 +21,7 @@ into presentable graphs.
 - [x] Filter out <4.8 volts
 - [x] Implement categorization of data according to [bortle scale](https://en.wikipedia.org/wiki/Bortle_scale)
 - [x] Make interactive graphs with R shiny
-- [ ] Document everything
+- [ ] Redo X scale to reference actual time (instead of fixed numbers) to account for daylight savings
 
 *Emojis to use*
 
