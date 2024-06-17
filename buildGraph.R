@@ -116,18 +116,34 @@ buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, phase = F, sa
   }
 
   
-  # Emoji does not work. Need to use a png if wanted to be included within graph.
-  # if(phase == T){
-  #     phaseDate = as.character(givenDate)
-  #     phaseY = as.numeric(strsplit(phaseDate,"-")[[1]][1])
-  #     phaseM = as.numeric(strsplit(phaseDate,"-")[[1]][2])
-  #     phaseD = as.numeric(strsplit(phaseDate,"-")[[1]][3])
-  #     phaseEmoji = moon_emoji(moon_phase(phaseY, phaseM, phaseD))
-  #   
-  #   myPlot = myPlot +
-  #     annotate("text", x=252, y=21.15, label= phaseEmoji)
-  # }
-  
+  ##### Phase Emoji #####
+  # Need to rework phase_emoji function because emojis cant be used as ggplot text
+  if(phase == T){
+    phaseDate = as.character(givenDate)
+     phaseY = as.numeric(strsplit(phaseDate,"-")[[1]][1])
+     phaseM = as.numeric(strsplit(phaseDate,"-")[[1]][2])
+     phaseD = as.numeric(strsplit(phaseDate,"-")[[1]][3])
+    
+    degree = moon_phase(phaseY, phaseM, phaseD)
+    margin = 45/2
+    phaseNum = 0 #default at new moon
+    
+    # Determine which PNG to use on graph via angles
+    for(phaseIndex in 1:7){
+      if(degree < 45*phase + margin & degree >= 45*phase + margin){
+        phaseNum = phaseIndex
+      }
+    }
+    
+    phasePNG = readPNG(
+      paste0(getwd(), "/Images/Icons/moon", phaseNum, ".png"))
+    
+    #TODO: Get image to work.
+    # myPlot = myPlot +
+    #   annotation_raster(phasePNG, ymin = 6,ymax= 7,xmin = 50,xmax = 70)
+    
+  }
+ 
 
   ##### Output #####
   if(save == T){
@@ -142,4 +158,4 @@ buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, phase = F, sa
 }
 
 ##### Usage #####
-#buildGraph("2023-10-10", phase = T)
+buildGraph("2023-10-10", phase = T)
