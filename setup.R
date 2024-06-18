@@ -7,6 +7,8 @@ library(viridis)
 library(latex2exp)
 library(magick)
 library(png)
+library(ggimage)
+library(cowplot)
 
 ##### Shiny #####
 library(shiny)
