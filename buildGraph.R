@@ -130,7 +130,7 @@ buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, phase = F, sa
     
     # Determine which PNG to use on graph via angles
     for(phaseIndex in 1:7){
-      if(degree < 45*phase + margin & degree >= 45*phase + margin){
+      if(degree < 45*phaseIndex + margin & degree >= 45*phaseIndex - margin){
         phaseNum = phaseIndex
       }
     }
@@ -138,10 +138,14 @@ buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, phase = F, sa
     phasePNG = readPNG(
       paste0(getwd(), "/Images/Icons/moon", phaseNum, ".png"))
     
-    #TODO: Get image to work.
-    # myPlot = myPlot +
-    #   annotation_raster(phasePNG, ymin = 6,ymax= 7,xmin = 50,xmax = 70)
+    myPlot = ggdraw(myPlot) +
+      draw_image(phasePNG,
+                 width = .1,
+                 height = .1)
+    #Can't get the image to move anywhere
     
+    outputName = paste0(outputName, "_emoji")
+
   }
  
 
@@ -156,6 +160,8 @@ buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, phase = F, sa
 
   return(myPlot)
 }
+
+
 
 ##### Usage #####
 buildGraph("2023-10-10", phase = T)

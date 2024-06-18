@@ -26,7 +26,8 @@ ui <- dashboardPage(
                       timeFormat = "%Y-%m-%d"),
           checkboxInput("midCheck", "Show midnight line"),
           checkboxInput("sqmCheck", "Show maximum SQM reading"),
-          checkboxInput("bortleCheck", "Show Bortle scale")
+          checkboxInput("bortleCheck", "Show Bortle scale"),
+          checkboxInput("moonCheck", "Display moon phase")
         )
       ),
 
@@ -69,11 +70,11 @@ server <- function(input, output, session) {
 
   ##### plot #####
   output$result_plot = renderPlot({
-    sqmVal = input$sqmCheck
-    midVal = input$midCheck
-    bortleVal = input$bortleCheck
-
-    buildGraph(as.Date(input$input_date), midVal, sqmVal, bortleVal)
+    buildGraph(as.Date(input$input_date), 
+               input$midCheck,
+               input$sqmCheck,
+               input$bortleCheck,
+               input$moonCheck)
   })
 
 
