@@ -18,9 +18,11 @@ library(httpuv)
 
 ##### python #####
 library(reticulate)
-#needs to run when R session starts, but cannot be run multiple times or causes error
-# use_virtualenv(paste0(getwd(),"/.venv"), required=T)
-# use_python(paste0(getwd(),'/.venv'))
+#will only run first time in R session
+if(paste0(getwd(), "/.venv/bin/python") != py_config()[1]){
+  use_virtualenv(paste0(getwd(),"/.venv"), required=T)
+  use_python(paste0(getwd(),'/.venv'))
+}
 
 ##### web scraping #####
 library(httr)
@@ -69,4 +71,8 @@ start = start %>% na.omit()
 finish = finish %>% na.omit()
 midnights = midnights[-1]
 midnights = midnights[-113] #removing first and last values to line up with start and finish
-ylabel = TeX("$\\frac{Magnitude}{Arcsec^2}")
+
+
+#First and Last dates (to be updated with new data)
+FIRSTDAY = as.Date("2023-07-20")
+LASTDAY = as.Date("2023-11-08") 
