@@ -22,7 +22,7 @@ buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, phase = F, sa
       labs(title = paste0("SQM Readings from ", as.character(givenDate), " to ",
                           as.character(as.Date(givenDate) + 1)))+
       xlab("") +
-      ylab(ylabel) +
+      ylab(TeX("$\\frac{Magnitude}{Arcsec^2}$")) +
       ylim(22, 5.8) +
       xlim(50, 250) +
       theme(plot.title = element_text(face = "bold"),
@@ -164,4 +164,4 @@ buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, phase = F, sa
 
 
 ##### Usage #####
-buildGraph("2023-10-10", phase = T)
+#buildGraph("2023-10-10", phase = T)
