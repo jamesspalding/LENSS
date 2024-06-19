@@ -1,42 +1,55 @@
 # SPDX-FileCopyrightText: 2024 GLAS Education <angel@glaseducation.org>
 # SPDX-License-Identifier: AGPL-3.0-only
+rm(list = ls())
 source("setup.R")
 
+
+
+##### Inupt #####
 ui <- dashboardPage(
   dashboardHeader(title = "LENSS Graphs"),
   dashboardSidebar(disable = TRUE),
   dashboardBody(
     fluidRow(
 
-      ##### Left Column #####
+      #Left Column
       column(
         width = 4,
 
-        ##### Input card #####
+        #Input card
         box(
           title = "Controls",
           status = "primary",
           solidHeader = TRUE,
           width = 12,
-          sliderInput("input_date",
+          
+          
+          sliderInput("sliderDate",
                       "Select Date:",
-                      min = as.Date("2023-07-20"), # First available date
-                      max = as.Date("2023-11-08"), # Last available date
+                      min = FIRSTDAY,
+                      max = LASTDAY,
                       value = as.Date("2023-07-20"),
                       timeFormat = "%Y-%m-%d"),
+          
+          
           checkboxInput("midCheck", "Show midnight line"),
           checkboxInput("sqmCheck", "Show maximum SQM reading"),
-          checkboxInput("bortleCheck", "Show Bortle scale"),
-          checkboxInput("moonCheck", "Display moon phase")
+          checkboxInput("bortleCheck", "Show Bortle scale", value = T),
+          checkboxInput("moonCheck", "Display moon phase", value = T),
+          
+          
+          actionButton("leftArrow", "<"),          
+          actionButton("rightArrow", ">")
+          
         )
       ),
 
-      ##### Right Column #####
+      #Right Column
       column(
         width = 8,
 
 
-        ##### Graph card #####
+        #Graph card
         fluidRow(
           box(
             title = "Graph",
@@ -45,49 +58,54 @@ ui <- dashboardPage(
             width = 12,
             plotOutput("result_plot")
           )
-        ),
-
-
-        ##### Moon/weather card #####
-        fluidRow(
-          box(
-            title = "Moon Phase",
-            status = "primary",
-            solidHeader = TRUE,
-            width = 12,
-            textOutput("phaseEmoji")
-          )
-
-
         )
       )
+      
+      
     )
   )
 )
 
+
+
+
+
+##### Output #####
 server <- function(input, output, session) {
 
+  input_date = reactiveVal(as.Date("2023-07-20"))
+  
+  #Slider
+  observeEvent(input$sliderDate, {
+    input_date(as.Date(input$sliderDate))
+  })
 
-  ##### plot #####
+  
+  #Arrows
+    observeEvent(input$leftArrow, {
+    if(input_date() != FIRSTDAY){
+      input_date(input_date() - 1)
+    } else {
+      input_date(input_date())
+    }
+  })
+    
+  observeEvent(input$rightArrow, {
+    if(input_date() != LASTDAY){
+      input_date(input_date() + 1)
+    } else {
+      input_date(input_date())
+    }
+  })
+  
+  
+  #Plot
   output$result_plot = renderPlot({
-    buildGraph(as.Date(input$input_date), 
+    buildGraph(input_date(), 
                input$midCheck,
                input$sqmCheck,
                input$bortleCheck,
                input$moonCheck)
-  })
-
-
-  ##### phase emoji #####
-  output$phaseEmoji = renderText({
-    phaseDate = as.character(input$input_date)
-      phaseY = as.numeric(strsplit(phaseDate,"-")[[1]][1])
-      phaseM = as.numeric(strsplit(phaseDate,"-")[[1]][2])
-      phaseD = as.numeric(strsplit(phaseDate,"-")[[1]][3])
-
-    moon_emoji(
-      moon_phase(phaseY, phaseM, phaseD)
-    )
   })
 
 }
