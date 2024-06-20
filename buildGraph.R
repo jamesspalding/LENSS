@@ -7,10 +7,17 @@ buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, phase = F, sa
 
 
   ##### Values #####
-  givenMid = which(midnights == which(date(kish$LocalTime) == givenDate &
-                                      hour(kish$LocalTime) == 0 &
-                                      minute(kish$LocalTime) == 0))
-  plotDate = kish[c(start[givenMid]:finish[givenMid]), ]
+  # givenMid = which(midnights == which(date(kish$LocalTime) == givenDate &
+  #                                     hour(kish$LocalTime) == 0 &
+  #                                     minute(kish$LocalTime) == 0))
+  # plotDate = kish[c(start[givenMid]:finish[givenMid]), ]
+  
+  currentDay = c(1,dayLength) + (dayLength * (as.Date(givenDate) - FIRSTDAY))
+  
+  
+  plotDate = kish[currentDay[1]:currentDay[2],]
+
+  
   maxSQM = max(plotDate$MagArcsec2)
   outputName = paste0("/plot_", as.character(givenDate))
 
@@ -24,20 +31,20 @@ buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, phase = F, sa
       xlab("") +
       ylab(TeX("$\\frac{Magnitude}{Arcsec^2}$")) +
       ylim(22, 5.8) +
-      xlim(50, 250) +
+      #xlim(50, 250) +
       theme(plot.title = element_text(face = "bold"),
             legend.position = "none",
             axis.ticks.x = element_blank(),
             axis.title.y = element_text(angle = 0, vjust = .5))+
-      scale_x_continuous(breaks = c(72, 144, 216),
-                         labels = c("6:00 P.M.",  "12:00 A.M.",  "6:00 A.M."))+
-      coord_cartesian(xlim = c(50, 250))
+      #coord_cartesian(xlim = c(50, 250))+
+      scale_x_continuous(breaks = c(.15 * dayLength, .5 * dayLength, .85 * dayLength),
+                         labels = c("6:00 P.M.",  "12:00 A.M.",  "6:00 A.M."))
 
-
+  
   ##### Midnight line #####
   if(midLine == T){
     myPlot = myPlot +
-      geom_vline(xintercept=144, linetype="dashed", alpha = .3)
+      geom_vline(xintercept= dayLength/2, linetype="dashed", alpha = .3)
 
     outputName = paste0(outputName, "_mid")
   }
@@ -106,11 +113,11 @@ buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, phase = F, sa
                 fill = "blue") +
 
       #Labels
-      annotate("text", x=252, y=6, label= "Urban")+
+      annotate("text", x=dayLength, y=6, label= "Urban")+
 
-      annotate("text", x=248.5, y=18.8, label= "Suburban")+
+      annotate("text", x=.974 * dayLength, y=18.8, label= "Suburban")+
 
-      annotate("text", x=252, y=21.15, label= "Rural")
+      annotate("text", x=dayLength, y=21.15, label= "Rural")
 
       outputName = paste0(outputName, "_bortle")
   }
@@ -164,4 +171,4 @@ buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, phase = F, sa
 
 
 ##### Usage #####
-#buildGraph("2023-10-10", phase = T)
+#buildGraph("2023-10-10", midLine = T, sqm = F, bortle = T, phase = T)
