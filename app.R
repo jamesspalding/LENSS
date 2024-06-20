@@ -1,6 +1,7 @@
 # SPDX-FileCopyrightText: 2024 GLAS Education <angel@glaseducation.org>
 # SPDX-License-Identifier: AGPL-3.0-only
 rm(list = ls())
+minInterval = 15 #manually set in intervals of 5
 source("setup.R")
 
 
@@ -51,16 +52,14 @@ ui <- dashboardPage(
 
         #Graph card
         fluidRow(
-          box(
-            title = "Graph",
-            status = "primary",
-            solidHeader = TRUE,
-            width = 12,
-            plotOutput("result_plot")
-          )
+          box(title = "Graph",
+              status = "primary",
+              solidHeader = TRUE,
+              width = 12,
+              plotOutput("result_plot"))
         )
+        
       )
-      
       
     )
   )
@@ -101,11 +100,13 @@ server <- function(input, output, session) {
   
   #Plot
   output$result_plot = renderPlot({
-    buildGraph(input_date(), 
-               input$midCheck,
-               input$sqmCheck,
-               input$bortleCheck,
-               input$moonCheck)
+    suppressWarnings({
+      buildGraph(input_date(), 
+                 input$midCheck,
+                 input$sqmCheck,
+                 input$bortleCheck,
+                 input$moonCheck)
+    })
   })
 
 }
