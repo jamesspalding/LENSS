@@ -20,6 +20,8 @@ r-libs:
 	R -e 'install.packages("shinylive", repos="http://cran.us.r-project.org")'
 	R -e 'install.packages("shinydashboard", repos="http://cran.us.r-project.org")'
 	R -e 'install.packages("reticulate", repos="http://cran.us.r-project.org")'
+	R -e 'install.packages("ggimage", repos="http://cran.us.r-project.org")'
+	R -e 'install.packages("cowplot", repos="http://cran.us.r-project.org")'
 .PHONY: r-libs
 
 alpine: apk r-libs
@@ -34,6 +36,7 @@ venv:
 	virtualenv --download ./.venv
 	. ./.venv/bin/activate
 	pip install skyfield
+	pip install Pillow
 .PHONY: virtenv
 
 moon:
