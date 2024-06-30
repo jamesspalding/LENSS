@@ -3,7 +3,7 @@
 library(tidyverse)
 
 ##### Build graphs for shiny app #####
-buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, phase = F, save = F, size = c(3201,1800)){
+buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, phase = F, save = F, size = c(3201,1800)) {
 
 
   ##### Values #####
@@ -11,15 +11,15 @@ buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, phase = F, sa
   #                                     hour(kish$LocalTime) == 0 &
   #                                     minute(kish$LocalTime) == 0))
   # plotDate = kish[c(start[givenMid]:finish[givenMid]), ]
-  
+
   currentDay = c(1,dayLength) + (dayLength * (as.Date(givenDate) - FIRSTDAY))
-  
-  
+
+
   plotDate = kish[currentDay[1]:currentDay[2],]
 
-  
-  maxSQM = max(plotDate$MagArcsec2)
-  outputName = paste0("/plot_", as.character(givenDate))
+
+  maxSQM <- max(plotDate$MagArcsec2)
+  outputName <- paste0("/plot_", as.character(givenDate))
 
 
   ##### Base Plot #####
@@ -40,10 +40,10 @@ buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, phase = F, sa
       scale_x_continuous(breaks = c(.15 * dayLength, .5 * dayLength, .85 * dayLength),
                          labels = c("6:00 P.M.",  "12:00 A.M.",  "6:00 A.M."))
 
-  
+
   ##### Midnight line #####
-  if(midLine == T){
-    myPlot = myPlot +
+  if (midLine == T) {
+    myPlot <- myPlot +
       geom_vline(xintercept= dayLength/2, linetype="dashed", alpha = .3)
 
     outputName = paste0(outputName, "_mid")
@@ -51,42 +51,42 @@ buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, phase = F, sa
 
 
   ##### Max SQM Readings #####
-  if(sqm == T){
+  if (sqm == T) {
 
-    labelList = c()
-    breakList = c()
+    labelList <- c()
+    breakList <- c()
 
     #Ordering for breaks
-    if(maxSQM > 20){
-      labelList = c(as.character(maxSQM), "", "15", "10", "5")
-      breakList = c(maxSQM, 20, 15, 10, 5)
+    if (maxSQM > 20) {
+      labelList <- c(as.character(maxSQM), "", "15", "10", "5")
+      breakList <- c(maxSQM, 20, 15, 10, 5)
     }
 
-    if(maxSQM > 15 & maxSQM <= 20){
-      labelList = c("", as.character(maxSQM), "15", "10", "5")
-      breakList = c(20, maxSQM, 15, 10, 5)
+    if (maxSQM > 15 && maxSQM <= 20) {
+      labelList <- c("", as.character(maxSQM), "15", "10", "5")
+      breakList <- c(20, maxSQM, 15, 10, 5)
     }
 
-    if(maxSQM > 10 & maxSQM <= 15){
-      labelList = c("20", "15", as.character(maxSQM), "10", "5")
-      breakList = c(20, 15, maxSQM, 10, 5)
+    if (maxSQM > 10 && maxSQM <= 15) {
+      labelList <- c("20", "15", as.character(maxSQM), "10", "5")
+      breakList <- c(20, 15, maxSQM, 10, 5)
     }
 
-    if(maxSQM > 5 & maxSQM <= 10){
-      labelList = c("20", "15", "10", as.character(maxSQM), "5")
-      breakList = c(20, 15, 10, maxSQM, 5)
+    if (maxSQM > 5 && maxSQM <= 10) {
+      labelList <- c("20", "15", "10", as.character(maxSQM), "5")
+      breakList <- c(20, 15, 10, maxSQM, 5)
     }
 
-    if(maxSQM <= 10){
-      labelList = c("20", "15", "10", "5", as.character(maxSQM))
-      breakList = c(20, 15, 10, 5, maxSQM)
+    if (maxSQM <= 10) {
+      labelList <- c("20", "15", "10", "5", as.character(maxSQM))
+      breakList <- c(20, 15, 10, 5, maxSQM)
     }
 
-    myPlot = myPlot+
+    myPlot <- myPlot+
                scale_y_continuous(breaks = breakList,
                                   labels = labelList,
                                   limits = c(22, 5.8),
-                                  trans = "reverse")+
+                                  trans = "reverse") +
                geom_hline(yintercept = maxSQM, linetype="dashed", alpha=.3)
 
     outputName = paste0(outputName, "_maxsqm")
@@ -94,7 +94,7 @@ buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, phase = F, sa
 
 
   ##### Bortle Overlay #####
-  if(bortle == T){
+  if (bortle == T) {
 
     myPlot = myPlot +
       #Urban (9-7)
@@ -113,51 +113,51 @@ buildGraph = function(givenDate, midLine = F, sqm = F, bortle = F, phase = F, sa
                 fill = "blue") +
 
       #Labels
-      annotate("text", x=dayLength, y=6, label= "Urban")+
+      annotate("text", x = dayLength, y = 6, label = "Urban") +
 
-      annotate("text", x=.974 * dayLength, y=18.8, label= "Suburban")+
+      annotate("text", x = .974 * dayLength, y = 18.8, label = "Suburban") +
 
-      annotate("text", x=dayLength, y=21.15, label= "Rural")
+      annotate("text", x = dayLength, y = 21.15, label = "Rural")
 
       outputName = paste0(outputName, "_bortle")
   }
 
-  
+
   ##### Phase Emoji #####
   # Need to rework phase_emoji function because emojis cant be used as ggplot text
-  if(phase == T){
-    phaseDate = as.character(givenDate)
-     phaseY = as.numeric(strsplit(phaseDate,"-")[[1]][1])
-     phaseM = as.numeric(strsplit(phaseDate,"-")[[1]][2])
-     phaseD = as.numeric(strsplit(phaseDate,"-")[[1]][3])
-    
-    degree = moon_phase(phaseY, phaseM, phaseD)
-    margin = 45/2
-    phaseNum = 0 #default at new moon
-    
+  if (phase == T) {
+    phaseDate <- as.character(givenDate)
+     phaseY <- as.numeric(strsplit(phaseDate,"-")[[1]][1])
+     phaseM <- as.numeric(strsplit(phaseDate,"-")[[1]][2])
+     phaseD <- as.numeric(strsplit(phaseDate,"-")[[1]][3])
+
+    degree <- moon_phase(phaseY, phaseM, phaseD)
+    margin <- 45 / 2
+    phaseNum <- 0 #default at new moon
+
     # Determine which PNG to use on graph via angles
-    for(phaseIndex in 1:7){
-      if(degree < 45*phaseIndex + margin & degree >= 45*phaseIndex - margin){
+    for(phaseIndex in 1:7) {
+      if (degree < 45 * phaseIndex + margin && degree >= 45 * phaseIndex - margin) {
         phaseNum = phaseIndex
       }
     }
-    
+
     phasePNG = readPNG(
       paste0(getwd(), "/Images/Icons/moon", phaseNum, ".png"))
-    
+
     myPlot = ggdraw(myPlot) +
       draw_image(phasePNG,
                  width = .1,
                  height = .1)
     #Can't get the image to move anywhere
-    
+
     outputName = paste0(outputName, "_emoji")
 
   }
- 
+
 
   ##### Output #####
-  if(save == T){
+  if (save == T) {
     ggsave(filename = paste0(imgPath, outputName, ".png"),
            plot = myPlot,
            width = size[1],
