@@ -39,8 +39,3 @@ venv:
 	. ./.venv/bin/activate && \
 	pip install skyfield Pillow
 .PHONY: venv
-
-moon:
-	. ./.venv/bin/activate
-	./moon.py
-.PHONY: moon
