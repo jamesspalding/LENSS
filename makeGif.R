@@ -1,3 +1,5 @@
+# SPDX-FileCopyrightText: 2024 GLAS Education <angel@glaseducation.org>
+# SPDX-License-Identifier: AGPL-3.0-only
 # creates a gif within specified range
 
 makeGif <- function(start_date, end_date,
