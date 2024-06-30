@@ -36,9 +36,8 @@ lint:
 
 venv:
 	virtualenv --download ./.venv
-	. ./.venv/bin/activate
-	pip install skyfield
-	pip install Pillow
+	. ./.venv/bin/activate && \
+	pip install skyfield Pillow
 .PHONY: venv
 
 moon:
