@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 
 #CHANGE FOR DIFFERENT QUALITY GRAPHS (5 default)
-if (exists("minInterval") == F) {
+if (exists("minInterval") == FALSE) {
   minInterval <- 5
 }
 
@@ -33,7 +33,7 @@ if (paste0(getwd(), "/.venv/bin/python") != py_config()[1]) {
   virtualenv_install("venv",
                      packages = c("skyfield"))
 
-  use_virtualenv(paste0(getwd(),"/.venv"), required=T)
+  use_virtualenv(paste0(getwd(),"/.venv"), required = TRUE)
   #use_python(paste0(getwd(),'/.venv'))
 }
 
