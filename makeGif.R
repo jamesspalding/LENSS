@@ -3,7 +3,7 @@
 # creates a gif within specified range
 
 makeGif <- function(start_date, end_date,
-                    MID = F, SQM = F, BORTLE = F, PHASE = F, SIZE = c(3201,1800), #makegraph params
+                    MID = FALSE, SQM = FALSE, BORTLE = FALSE, PHASE = FALSE, SIZE = c(3201,1800), #makegraph params
                     duration = 200) { #gif duration
 
   date_diff <- as.Date(end_date) - as.Date(start_date)

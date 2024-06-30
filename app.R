@@ -35,8 +35,8 @@ ui <- dashboardPage(
 
           checkboxInput("midCheck", "Show midnight line"),
           checkboxInput("sqmCheck", "Show maximum SQM reading"),
-          checkboxInput("bortleCheck", "Show Bortle scale", value = T),
-          checkboxInput("moonCheck", "Display moon phase", value = T),
+          checkboxInput("bortleCheck", "Show Bortle scale", value = TRUE),
+          checkboxInput("moonCheck", "Display moon phase", value = TRUE),
 
 
           actionButton("leftArrow", "<"),
@@ -72,7 +72,7 @@ ui <- dashboardPage(
 ##### Output #####
 server <- function(input, output, session) {
 
-  input_date = reactiveVal(as.Date("2023-07-20"))
+  input_date <- reactiveVal(as.Date("2023-07-20"))
 
   #Slider
   observeEvent(input$sliderDate, {
@@ -81,7 +81,7 @@ server <- function(input, output, session) {
 
 
   #Arrows
-    observeEvent(input$leftArrow, {
+  observeEvent(input$leftArrow, {
     if(input_date() != FIRSTDAY){
       input_date(input_date() - 1)
     } else {
@@ -99,7 +99,7 @@ server <- function(input, output, session) {
 
 
   #Plot
-  output$result_plot = renderPlot({
+  output$result_plot <- renderPlot({
     suppressWarnings({
       buildGraph(input_date(),
                  input$midCheck,
