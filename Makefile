@@ -7,9 +7,9 @@ run:
 
 apk:
 	doas apk add R R-dev libjpeg tiff-dev imagemagick-dev libarchive-dev
-.PHONY: alpine
+.PHONY: apk
 
-r-libs:
+rlibs:
 	R -e 'install.packages("tidyverse", repos="http://cran.us.r-project.org")'
 	R -e 'install.packages("viridis", repos="http://cran.us.r-project.org")'
 	R -e 'install.packages("viridisLite", repos="http://cran.us.r-project.org")'
@@ -23,9 +23,9 @@ r-libs:
 	R -e 'install.packages("ggimage", repos="http://cran.us.r-project.org")'
 	R -e 'install.packages("cowplot", repos="http://cran.us.r-project.org")'
 	R -e 'install.packages("lintr", repos="http://cran.us.r-project.org")'
-.PHONY: r-libs
+.PHONY: rlibs
 
-alpine: apk r-libs
+alpine: apk rlibs
 	echo "done!"
 .PHONY: alpine
 
@@ -39,7 +39,7 @@ venv:
 	. ./.venv/bin/activate
 	pip install skyfield
 	pip install Pillow
-.PHONY: virtenv
+.PHONY: venv
 
 moon:
 	. ./.venv/bin/activate
