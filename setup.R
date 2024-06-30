@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 
 #CHANGE FOR DIFFERENT QUALITY GRAPHS (5 default)
-if(exists("minInterval") == F){
-  minInterval = 5
+if (exists("minInterval") == F) {
+  minInterval <- 5
 }
 
 
@@ -25,14 +25,14 @@ library(httpuv)
 ##### python #####
 library(reticulate)
 #will only run first time in R session
-if(paste0(getwd(), "/.venv/bin/python") != py_config()[1]){
-  
-  virtualenv_create(envname = 'venv', 
-                    python = '/usr/bin/python3')
+if (paste0(getwd(), "/.venv/bin/python") != py_config()[1]) {
 
-  virtualenv_install('venv', 
-                     packages = c('skyfield'))
-  
+  virtualenv_create(envname = "venv",
+                    python = "/usr/bin/python3")
+
+  virtualenv_install("venv",
+                     packages = c("skyfield"))
+
   use_virtualenv(paste0(getwd(),"/.venv"), required=T)
   #use_python(paste0(getwd(),'/.venv'))
 }
@@ -47,55 +47,55 @@ source("buildGraph.R")
 source("makeGif.R")
 
 ##### paths #####
-framePath = paste0(getwd(),"/Images/Frames") #frame location for gif generation
-imgPath = paste0(getwd(),"/Images") #output location for images
-iconPath = paste0(getwd(),"/Images/Icons") #location of emojis for moon and weather
+framePath <- paste0(getwd(), "/Images/Frames") #frame location for gif generation
+imgPath <- paste0(getwd(), "/Images") #output location for images
+iconPath <- paste0(getwd(), "/Images/Icons") #location of emojis for moon and weather
 
 
 ##### data cleaning #####
-kish = read.csv("Data/Kish11-9.csv")
-kish = kish[-c(1:39),1:5]
-kish = kish[-c(1:2),]
-colnames(kish) = c("UTCTime", "LocalTime", "TempC", "Volts", "MagArcsec2")
-kish = mutate(kish, Hour = hour(kish$LocalTime))
+kish <- read.csv("Data/Kish11-9.csv")
+kish <- kish[-c(1:39), 1:5]
+kish <- kish[-c(1:2), ]
+colnames(kish) <- c("UTCTime", "LocalTime", "TempC", "Volts", "MagArcsec2")
+kish <- mutate(kish, Hour = hour(kish$LocalTime))
 
-kish$UTCTime = as.ts(kish$UTCTime)
-kish$LocalTime = as.ts(kish$LocalTime)
-kish$TempC = as.numeric(kish$TempC)
-kish$Volts = as.numeric(kish$Volts)
-kish$MagArcsec2 = as.numeric(kish$MagArcsec2)
+kish$UTCTime <- as.ts(kish$UTCTime)
+kish$LocalTime <- as.ts(kish$LocalTime)
+kish$TempC <- as.numeric(kish$TempC)
+kish$Volts <- as.numeric(kish$Volts)
+kish$MagArcsec2 <- as.numeric(kish$MagArcsec2)
 
 #remove low volt cases
-kish = kish %>%
-   filter(Volts > 4.8)
+kish <- kish %>%
+  filter(Volts > 4.8)
 
 
 #################################################
 
 #remove times between 8 AM - 4 PM
-kish = kish %>%
+kish <- kish %>%
   filter(Hour <= 8 | Hour >= 16)
 
 #remove initial AM obs
-kish = kish[-c(1:408),]
+kish <- kish[-c(1:408), ]
 
 #filter to interval
-detailLevel = minInterval/5
-kish = kish[seq(1, NROW(kish), by = detailLevel),]
+detailLevel <- minInterval / 5
+kish <- kish[seq(1, NROW(kish), by = detailLevel), ]
 
 #add observation #
-kish = mutate(kish, Obs = seq_along(kish$LocalTime))
+kish <- mutate(kish, Obs = seq_along(kish$LocalTime))
 
 # 22860/204 5 min int
 # 11430/102 10 min int 3
 # 7620/68 15 min int 9
 
-dayLength = 204/detailLevel
+dayLength <- 204 / detailLevel
 
 
 #First and Last dates (to be updated with new data)
-FIRSTDAY = as.Date("2023-07-20")
-LASTDAY = as.Date("2023-11-08") 
+FIRSTDAY <- as.Date("2023-07-20")
+LASTDAY <- as.Date("2023-11-08")
 
 #for every night past initial night, add 68
 

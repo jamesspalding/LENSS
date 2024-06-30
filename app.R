@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2024 GLAS Education <angel@glaseducation.org>
 # SPDX-License-Identifier: AGPL-3.0-only
 rm(list = ls())
-minInterval = 15 #manually set in intervals of 5
+minInterval <- 15 #manually set in intervals of 5
 source("setup.R")
 
 
@@ -23,25 +23,25 @@ ui <- dashboardPage(
           status = "primary",
           solidHeader = TRUE,
           width = 12,
-          
-          
+
+
           sliderInput("sliderDate",
                       "Select Date:",
                       min = FIRSTDAY,
                       max = LASTDAY,
                       value = as.Date("2023-07-20"),
                       timeFormat = "%Y-%m-%d"),
-          
-          
+
+
           checkboxInput("midCheck", "Show midnight line"),
           checkboxInput("sqmCheck", "Show maximum SQM reading"),
           checkboxInput("bortleCheck", "Show Bortle scale", value = T),
           checkboxInput("moonCheck", "Display moon phase", value = T),
-          
-          
-          actionButton("leftArrow", "<"),          
+
+
+          actionButton("leftArrow", "<"),
           actionButton("rightArrow", ">")
-          
+
         )
       ),
 
@@ -58,9 +58,9 @@ ui <- dashboardPage(
               width = 12,
               plotOutput("result_plot"))
         )
-        
+
       )
-      
+
     )
   )
 )
@@ -73,13 +73,13 @@ ui <- dashboardPage(
 server <- function(input, output, session) {
 
   input_date = reactiveVal(as.Date("2023-07-20"))
-  
+
   #Slider
   observeEvent(input$sliderDate, {
     input_date(as.Date(input$sliderDate))
   })
 
-  
+
   #Arrows
     observeEvent(input$leftArrow, {
     if(input_date() != FIRSTDAY){
@@ -88,7 +88,7 @@ server <- function(input, output, session) {
       input_date(input_date())
     }
   })
-    
+
   observeEvent(input$rightArrow, {
     if(input_date() != LASTDAY){
       input_date(input_date() + 1)
@@ -96,12 +96,12 @@ server <- function(input, output, session) {
       input_date(input_date())
     }
   })
-  
-  
+
+
   #Plot
   output$result_plot = renderPlot({
     suppressWarnings({
-      buildGraph(input_date(), 
+      buildGraph(input_date(),
                  input$midCheck,
                  input$sqmCheck,
                  input$bortleCheck,
