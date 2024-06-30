@@ -22,6 +22,7 @@ r-libs:
 	R -e 'install.packages("reticulate", repos="http://cran.us.r-project.org")'
 	R -e 'install.packages("ggimage", repos="http://cran.us.r-project.org")'
 	R -e 'install.packages("cowplot", repos="http://cran.us.r-project.org")'
+	R -e 'install.packages("lintr", repos="http://cran.us.r-project.org")'
 .PHONY: r-libs
 
 alpine: apk r-libs
@@ -30,6 +31,7 @@ alpine: apk r-libs
 
 lint:
 	reuse lint
+	./lint.R
 .PHONY: lint
 
 venv:
