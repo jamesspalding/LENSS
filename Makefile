@@ -6,7 +6,7 @@ run:
 .PHONY: run
 
 apk:
-	doas apk add R R-dev libjpeg tiff-dev imagemagick-dev libarchive-dev
+	doas apk add R R-dev libjpeg tiff-dev imagemagick-dev libarchive-dev py3-virtualenv g++ syslinux-dev
 .PHONY: apk
 
 rlibs:
