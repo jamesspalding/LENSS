@@ -13,6 +13,9 @@
 # python astro
 de421.bsp
 
+# weather
+/Data/weather*.csv
+
 # virtualenv
 /.venv
 
