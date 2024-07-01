@@ -1,10 +1,23 @@
 # SPDX-FileCopyrightText: 2024 GLAS Education <angel@glaseducation.org>
 # SPDX-License-Identifier: AGPL-3.0-only
 
+#First and Last dates (to be updated with new data)
+FIRSTDAY <- as.Date("2023-07-20")
+LASTDAY <- as.Date("2023-11-08")
+
 #CHANGE FOR DIFFERENT QUALITY GRAPHS (5 default)
 if (exists("minInterval") == FALSE) {
   minInterval <- 5
 }
+
+# get weather data
+if((is.integer(which(grepl("weather", list.files("./Data")))) && length(which(grepl("weather", list.files("./Data")))) == 0L)==F){
+  #check for existing weather file, and removing if found
+  file.remove(paste0(getwd(),"/Data/",list.files("./Data")[which(grepl("weather", list.files("./Data")))]))
+}
+
+system2(command = "./weather.sh",
+          args = c(as.character(FIRSTDAY), as.character(LASTDAY))) #gets necessary data
 
 
 ##### data/presentation #####
@@ -84,7 +97,5 @@ kish <- mutate(kish, Obs = seq_along(kish$LocalTime))
 dayLength <- 204 / detailLevel
 
 
-#First and Last dates (to be updated with new data)
-FIRSTDAY <- as.Date("2023-07-20")
-LASTDAY <- as.Date("2023-11-08")
+
 
