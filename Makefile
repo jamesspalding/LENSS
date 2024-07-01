@@ -7,7 +7,10 @@ run:
 	Rscript app.R
 
 apk:
-	apk add R R-dev libjpeg tiff-dev imagemagick-dev libarchive-dev py3-virtualenv g++ libxml2-dev linux-headers fontconfig-dev freetype-dev harfbuzz-dev fribidi-dev
+	apk add R R-dev libjpeg tiff-dev imagemagick-dev libarchive-dev py3-virtualenv g++ libxml2-dev linux-headers fontconfig-dev freetype-dev harfbuzz-dev fribidi-dev curl-dev
+
+apt:
+	apt install r-base-dev libjpeg-dev libtiff-dev imagemagick libmagick++-dev libarchive-dev virtualenv g++ libxml2-dev linux-headers libfontconfig-dev libfreetype-dev libharfbuzz-dev libfribidi-dev libcurl4-openssl-dev
 
 rlibs:
 	R -e 'install.packages("tidyverse", repos="$(CRAN_MIRROR)")'
@@ -33,4 +36,4 @@ venv:
 	. ./.venv/bin/activate && \
 	pip install skyfield Pillow
 
-.PHONY: run apk rlibs lint venv
+.PHONY: run apk apt rlibs lint venv
