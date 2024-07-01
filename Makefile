@@ -5,7 +5,7 @@ run:
 	Rscript app.R
 
 apk:
-	doas apk add R R-dev libjpeg tiff-dev imagemagick-dev libarchive-dev py3-virtualenv g++ libxml2-dev linux-headers fontconfig-dev freetype-dev harfbuzz-dev fribidi-dev
+	apk add R R-dev libjpeg tiff-dev imagemagick-dev libarchive-dev py3-virtualenv g++ libxml2-dev linux-headers fontconfig-dev freetype-dev harfbuzz-dev fribidi-dev
 
 rlibs:
 	R -e 'install.packages("tidyverse", repos="http://cran.us.r-project.org")'
