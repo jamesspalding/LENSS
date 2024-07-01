@@ -6,12 +6,6 @@ library(tidyverse)
 buildGraph <- function(givenDate, midLine = FALSE, sqm = FALSE, bortle = FALSE, phase = FALSE, save = FALSE, size = c(3201,1800)) {
 
 
-  ##### Values #####
-  # givenMid = which(midnights == which(date(kish$LocalTime) == givenDate &
-  #                                     hour(kish$LocalTime) == 0 &
-  #                                     minute(kish$LocalTime) == 0))
-  # plotDate = kish[c(start[givenMid]:finish[givenMid]), ]
-
   currentDay <- c(1, dayLength) + (dayLength * (as.Date(givenDate) - FIRSTDAY))
 
 

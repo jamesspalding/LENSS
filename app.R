@@ -29,7 +29,7 @@ ui <- dashboardPage(
                       "Select Date:",
                       min = FIRSTDAY,
                       max = LASTDAY,
-                      value = as.Date("2023-07-20"),
+                      value = as.Date(FIRSTDAY),
                       timeFormat = "%Y-%m-%d"),
 
 
@@ -72,7 +72,7 @@ ui <- dashboardPage(
 ##### Output #####
 server <- function(input, output, session) {
 
-  input_date <- reactiveVal(as.Date("2023-07-20"))
+  input_date <- reactiveVal(as.Date(FIRSTDAY))
 
   #Slider
   observeEvent(input$sliderDate, {
