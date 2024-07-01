@@ -27,14 +27,8 @@ library(reticulate)
 #will only run first time in R session
 if (paste0(getwd(), "/.venv/bin/python") != py_config()[1]) {
 
-  virtualenv_create(envname = "venv",
-                    python = "/usr/bin/python3")
-
-  virtualenv_install("venv",
-                     packages = c("skyfield"))
-
-  use_virtualenv(paste0(getwd(),"/.venv"), required = TRUE)
-  #use_python(paste0(getwd(),'/.venv'))
+  use_virtualenv(paste0(getwd(), "/.venv"), required = TRUE)
+  use_python(paste0(getwd(), "/.venv/bin/python"))
 }
 
 ##### web scraping #####
