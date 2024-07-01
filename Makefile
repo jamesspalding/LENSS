@@ -3,11 +3,9 @@
 
 run:
 	Rscript app.R
-.PHONY: run
 
 apk:
 	doas apk add R R-dev libjpeg tiff-dev imagemagick-dev libarchive-dev py3-virtualenv g++ syslinux-dev
-.PHONY: apk
 
 rlibs:
 	R -e 'install.packages("tidyverse", repos="http://cran.us.r-project.org")'
@@ -23,19 +21,17 @@ rlibs:
 	R -e 'install.packages("ggimage", repos="http://cran.us.r-project.org")'
 	R -e 'install.packages("cowplot", repos="http://cran.us.r-project.org")'
 	R -e 'install.packages("lintr", repos="http://cran.us.r-project.org")'
-.PHONY: rlibs
 
 alpine: apk rlibs
 	echo "done!"
-.PHONY: alpine
 
 lint:
 	reuse lint
 	./lint.R
-.PHONY: lint
 
 venv:
 	virtualenv --download ./.venv
 	. ./.venv/bin/activate && \
 	pip install skyfield Pillow
-.PHONY: venv
+
+.PHONY: run apk rlibs alpine lint venv
