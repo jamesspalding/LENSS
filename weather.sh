@@ -1,12 +1,12 @@
 #!/bin/sh -eu
 # SPDX-FileCopyrightText: 2024 GLAS Education <angel@glaseducation.org>
 # SPDX-License-Identifier: AGPL-3.0-only
-# TODO: switch to R
+# TODO: switch to R DONE
 
 lat="42.5831"
 lon="-88.5394"
-start="2023-07-18"
-end="2023-11-09"
+start=$1 #"2023-07-18"
+end=$2 #"2023-11-09"
 tz="America%2FChicago"
 var="temperature_2m,precipitation,snowfall,snow_depth,cloud_cover,cloud_cover_low,cloud_cover_mid,cloud_cover_high"
 format="csv"
