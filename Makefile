@@ -22,9 +22,6 @@ rlibs:
 	R -e 'install.packages("cowplot", repos="http://cran.us.r-project.org")'
 	R -e 'install.packages("lintr", repos="http://cran.us.r-project.org")'
 
-alpine: apk rlibs
-	echo "done!"
-
 lint:
 	reuse lint
 	./lint.R
@@ -34,4 +31,4 @@ venv:
 	. ./.venv/bin/activate && \
 	pip install skyfield Pillow
 
-.PHONY: run apk rlibs alpine lint venv
+.PHONY: run apk rlibs lint venv
