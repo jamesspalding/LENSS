@@ -10,7 +10,7 @@ end=$2 #"2023-11-09"
 tz="America%2FChicago"
 var="temperature_2m,precipitation,snowfall,snow_depth,cloud_cover,cloud_cover_low,cloud_cover_mid,cloud_cover_high"
 format="csv"
-path="Data/weather_${start}_$end.csv"
+path="Data/weatherData.csv"
 
 if ! [ -e "$path" ]; then
 	curl -f "https://archive-api.open-meteo.com/v1/archive?latitude=$lat&longitude=$lon&start_date=$start&end_date=$end&hourly=$var&timezone=$tz&format=$format" > "$path"
