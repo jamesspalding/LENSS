@@ -119,4 +119,7 @@ dayLength <- 204 / detailLevel
 #joining datasets
 kish <- kish %>% 
   left_join(weatherData, by = c("Day", "Hour")) %>%
-  select(-c("time", "Day"))
+  select(-c("time", "Day", "temperature_2m (°C)",
+            "cloud_cover_low (%)", "cloud_cover_mid (%)", "cloud_cover_high (%)"))
+
+kish$`cloud_cover (%)` <- kish$`cloud_cover (%)`/100
