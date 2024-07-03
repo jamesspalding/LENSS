@@ -3,7 +3,7 @@
 library(tidyverse)
 
 ##### Build graphs for shiny app #####
-buildGraph <- function(givenDate, midLine = FALSE, sqm = FALSE, bortle = FALSE, phase = FALSE, save = FALSE, size = c(3201,1800)) {
+buildGraph <- function(givenDate, midLine = FALSE, sqm = FALSE, bortle = FALSE, cloud = FALSE, phase = FALSE, save = FALSE, size = c(3201,1800)) {
 
 
   currentDay <- c(1, dayLength) + (dayLength * (as.Date(givenDate) - FIRSTDAY))
@@ -89,6 +89,7 @@ buildGraph <- function(givenDate, midLine = FALSE, sqm = FALSE, bortle = FALSE, 
 
   ##### Bortle Overlay #####
   if (bortle == TRUE) {
+    cloud = FALSE
 
     myPlot <- myPlot +
       #Urban (9-7)
@@ -116,9 +117,80 @@ buildGraph <- function(givenDate, midLine = FALSE, sqm = FALSE, bortle = FALSE, 
       outputName <- paste0(outputName, "_bortle")
   }
 
+  
+  ##### Cloud overlay #####
+  # mutually exclusive with bortle overlay
+  if(cloud == TRUE){
+    cloudHours <- plotDate$`cloud_cover (%)`[seq(1, 68, by=4)]
+    cloudHours <- cloudHours/2.5
+    
+    # for(i in 0:16){
+    #   myPlot <- myPlot +
+    #     geom_rect(aes(xmin = 1+(i*4), xmax = 4+(i*4), ymin = -Inf, ymax = Inf),
+    #                 alpha = cloudHours[i+1],
+    #                 fill = "blue")
+    # }
+    
+    #unsure why for loop doesnt work...
+    
+    myPlot <- myPlot +
+      geom_rect(aes(xmin = 0, xmax = 4, ymin = -Inf, ymax = Inf),
+                alpha = cloudHours[1],
+                fill = "blue") +
+      geom_rect(aes(xmin = 4, xmax = 8, ymin = -Inf, ymax = Inf),
+                alpha = cloudHours[2],
+                fill = "blue") +
+      geom_rect(aes(xmin = 8, xmax = 12, ymin = -Inf, ymax = Inf),
+                alpha = cloudHours[3],
+                fill = "blue") +
+        geom_rect(aes(xmin = 12, xmax = 16, ymin = -Inf, ymax = Inf),
+                alpha = cloudHours[4],
+                fill = "blue") +
+      geom_rect(aes(xmin = 16, xmax = 20, ymin = -Inf, ymax = Inf),
+                alpha = cloudHours[5],
+                fill = "blue") +
+      geom_rect(aes(xmin = 20, xmax = 24, ymin = -Inf, ymax = Inf),
+                alpha = cloudHours[6],
+                fill = "blue") +
+      geom_rect(aes(xmin = 24, xmax = 28, ymin = -Inf, ymax = Inf),
+                alpha = cloudHours[7],
+                fill = "blue") +
+      geom_rect(aes(xmin = 28, xmax = 32, ymin = -Inf, ymax = Inf),
+                alpha = cloudHours[8],
+                fill = "blue") +
+      geom_rect(aes(xmin = 32, xmax = 36, ymin = -Inf, ymax = Inf),
+                alpha = cloudHours[9],
+                fill = "blue") +
+      geom_rect(aes(xmin = 36, xmax = 40, ymin = -Inf, ymax = Inf),
+                alpha = cloudHours[10],
+                fill = "blue") +
+      geom_rect(aes(xmin = 40, xmax = 44, ymin = -Inf, ymax = Inf),
+                alpha = cloudHours[11],
+                fill = "blue") +
+      geom_rect(aes(xmin = 44, xmax = 48, ymin = -Inf, ymax = Inf),
+                alpha = cloudHours[12],
+                fill = "blue") +
+      geom_rect(aes(xmin = 48, xmax = 52, ymin = -Inf, ymax = Inf),
+                alpha = cloudHours[13],
+                fill = "blue") +
+      geom_rect(aes(xmin = 52, xmax = 56, ymin = -Inf, ymax = Inf),
+                alpha = cloudHours[14],
+                fill = "blue") +
+      geom_rect(aes(xmin = 56, xmax = 60, ymin = -Inf, ymax = Inf),
+                alpha = cloudHours[15],
+                fill = "blue") +
+      geom_rect(aes(xmin = 60, xmax = 64, ymin = -Inf, ymax = Inf),
+                alpha = cloudHours[16],
+                fill = "blue") +
+      geom_rect(aes(xmin = 64, xmax = 68, ymin = -Inf, ymax = Inf),
+                alpha = cloudHours[17],
+                fill = "blue")
+      
+    
+  }
+  
 
   ##### Phase Emoji #####
-  # Need to rework phase_emoji function because emojis cant be used as ggplot text
   if (phase == TRUE) {
     phaseDate <- as.character(givenDate)
      phaseY <- as.numeric(strsplit(phaseDate,"-")[[1]][1])
@@ -166,3 +238,4 @@ buildGraph <- function(givenDate, midLine = FALSE, sqm = FALSE, bortle = FALSE, 
 
 ##### Usage #####
 #buildGraph("2023-10-10", midLine = T, sqm = F, bortle = T, phase = T)
+buildGraph("2023-10-29",cloud=T)
