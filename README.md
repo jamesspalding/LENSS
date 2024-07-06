@@ -14,22 +14,18 @@ into presentable graphs.
 - [ ] Set up skyfield for twilight calculation times at -18° angle
 - [ ] Pipe data through scripts to automatically create .csv files
 - [ ] Create website
-- [ ] Integrate open-meteo.com weather API
+- [x] Integrate open-meteo.com weather API
 
 #### James
 
 - [x] Filter out <4.8 volts
 - [x] Implement categorization of data according to [bortle scale](https://en.wikipedia.org/wiki/Bortle_scale)
 - [x] Make interactive graphs with R shiny
-- [ ] Redo X scale to reference actual time (instead of fixed numbers) to account for daylight savings
-- [ ] Improve efficiency?
+- [x] Redo X scale to reference actual time (instead of fixed numbers) to account for daylight savings
+- [x] Improve efficiency?
 
-#### Website idea
+#### Website
 
-- Transfer data
-- Automatically generate "frames" for each day
-- Upload to image folder
-- Automatically be added to interactive slider
 - "What is twilight?" section
 - Map of light pollution in US
 
@@ -43,13 +39,21 @@ Plot of all dates
 
 Animation of all dates
 
-![](https://github.com/jamesspalding/LENSS/blob/main/Images/maxSQM2023-09-26.png)
+![](https://github.com/jamesspalding/LENSS/blob/main/Images/plot_2023-10-23_mid_maxsqm.png)
 
-Plot with the max SQM reading on the Y axis
+Plot with max SQM reading and midnight both labeled
+
+![](https://github.com/jamesspalding/LENSS/blob/main/Images/plot_2023-10-23_emoji.png)
+
+Plot with moon phase displayed
 
 ![](https://github.com/jamesspalding/LENSS/blob/main/Images/plot_2023-10-10_mid_maxsqm_bortle.png)
 
 Plot with Bortle scale overlaid
+
+![](https://github.com/jamesspalding/LENSS/blob/main/Images/plot_2023-10-23_cloudcover.png)
+
+Plot with cloud cover overlaid
 
 ## LICENSES
 
