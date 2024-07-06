@@ -63,7 +63,7 @@ if((is.integer(which(grepl("weatherData.csv", list.files("./Data")))) && length(
 }
 
 system2(command = "./weather.sh",
-        args = c(as.character(FIRSTDAY), as.character(LASTDAY))) #gets necessary data
+        args = c(as.character(FIRSTDAY), as.character(LASTDAY+1))) #gets necessary data
 
 weatherData <- read_csv("Data/weatherData.csv", 
                          skip = 2)

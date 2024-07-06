@@ -33,14 +33,23 @@ ui <- dashboardPage(
                       timeFormat = "%Y-%m-%d"),
 
 
-          checkboxInput("midCheck", "Show midnight line"),
-          checkboxInput("sqmCheck", "Show maximum SQM reading"),
-          checkboxInput("bortleCheck", "Show Bortle scale", value = TRUE),
-          checkboxInput("moonCheck", "Display moon phase", value = TRUE),
-
-
           actionButton("leftArrow", "<"),
-          actionButton("rightArrow", ">")
+          actionButton("rightArrow", ">"),
+
+          
+          div(tags$label("Graph Options"),
+              checkboxInput("midCheck", "Display midnight line", value = TRUE),
+              checkboxInput("moonCheck", "Display moon phase", value = TRUE), 
+              checkboxInput("sqmCheck", "Display maximum SQM reading"),
+              
+              
+              radioButtons("selection", label = "Overlays",
+                           choices = list("Bortle scale" = "bortle",
+                                          "Cloud cover" = "cloud",
+                                          "None" = "noselection"),
+                           selected = "noselection")
+          )
+
 
         )
       ),
@@ -73,7 +82,12 @@ ui <- dashboardPage(
 server <- function(input, output, session) {
 
   input_date <- reactiveVal(as.Date(FIRSTDAY))
+  
+  bortleCheck <- reactive({input$selection == "bortle"})
+  
+  cloudCheck <- reactive({input$selection == "cloud"})
 
+  
   #Slider
   observeEvent(input$sliderDate, {
     input_date(as.Date(input$sliderDate))
@@ -102,10 +116,11 @@ server <- function(input, output, session) {
   output$result_plot <- renderPlot({
     suppressWarnings({
       buildGraph(input_date(),
-                 input$midCheck,
-                 input$sqmCheck,
-                 input$bortleCheck,
-                 input$moonCheck)
+                 midLine = input$midCheck,
+                 sqm = input$sqmCheck,
+                 bortle = bortleCheck(),
+                 phase = input$moonCheck,
+                 cloud = cloudCheck())
     })
   })
 

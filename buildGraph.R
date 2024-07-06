@@ -185,8 +185,9 @@ buildGraph <- function(givenDate, midLine = FALSE, sqm = FALSE, bortle = FALSE, 
       geom_rect(aes(xmin = 64, xmax = 68, ymin = -Inf, ymax = Inf),
                 alpha = cloudHours[17],
                 fill = "blue")
+
       
-    
+    outputName <- paste0(outputName, "_cloudcover")
   }
   
 
@@ -238,4 +239,4 @@ buildGraph <- function(givenDate, midLine = FALSE, sqm = FALSE, bortle = FALSE, 
 
 ##### Usage #####
 #buildGraph("2023-10-10", midLine = T, sqm = F, bortle = T, phase = T)
-buildGraph("2023-10-29",cloud=T)
+#buildGraph("2023-10-29",cloud=T)
