@@ -54,7 +54,7 @@ if (exists("minInterval") == FALSE) {
 ########################
 
 # get weather data
-source("get_weather_csv.R")
+source(paste0(getwd(),"/Functions/get_weather_csv.R"))
 get_weather_csv(FIRSTDAY, LASTDAY+1)
 weather_csv <- paste0(getwd(), "/Data/weather_", FIRSTDAY, "_", LASTDAY+1, ".csv")
 weatherData <- read.csv(weather_csv, skip = 2)
