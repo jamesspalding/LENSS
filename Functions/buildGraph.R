@@ -225,7 +225,7 @@ buildGraph <- function(givenDate, midLine = FALSE, sqm = FALSE, bortle = FALSE, 
 
   ##### Output #####
   if (save == TRUE) {
-    ggsave(filename = paste0(imgPath, outputName, ".png"),
+    ggsave(filename = paste0(paste0(getwd(), "/Images"), outputName, ".png"),
            plot = myPlot,
            width = size[1],
            height = size[2],

@@ -31,15 +31,12 @@ if (paste0(getwd(), "/.venv/bin/python") != py_config()[1]) {
 }
 
 # Custom Functions
-source_python("moon_phase.py")
-source_python("animateFrames.py")
-source("buildGraph.R")
-source("makeGif.R")
+source_python(paste0(getwd(),"/Functions/moon_phase.py"))
+source(paste0(getwd(),"/Functions/buildGraph.R"))
 
-# paths 
-framePath <- paste0(getwd(), "/Images/Frames") #frame location for gif generation
-imgPath <- paste0(getwd(), "/Images") #output location for images
-iconPath <- paste0(getwd(), "/Images/Icons") #location of emojis for moon and weather
+# Gif generation (not required for app)
+# source(paste0(getwd(),"/Functions/makeGif.R"))
+# source_python(paste0(getwd(),"/Functions/animateFrames.py"))
 
 #First and Last dates (to be updated with new data)
 FIRSTDAY <- as.Date("2023-07-20")
@@ -57,31 +54,17 @@ if (exists("minInterval") == FALSE) {
 ########################
 
 # get weather data
-
-# if((is.integer(which(grepl("weatherData.csv", list.files("./Data")))) && length(which(grepl("weather", list.files("./Data")))) == 0L)==F){
-#   #check for existing weather file, and removing if found
-#   file.remove(paste0(getwd(),"/Data/",list.files("./Data")[which(grepl("weather", list.files("./Data")))]))
-# }
-# 
-# system2(command = "./weather.sh",
-#         args = c(as.character(FIRSTDAY), as.character(LASTDAY+1))) #gets necessary data
-# 
-# weatherData <- read_csv("Data/weatherData.csv", 
-#                          skip = 2)
-
 source("get_weather_csv.R")
 get_weather_csv(FIRSTDAY, LASTDAY+1)
 weather_csv <- paste0(getwd(), "/Data/weather_", FIRSTDAY, "_", LASTDAY+1, ".csv")
 weatherData <- read.csv(weather_csv, skip = 2)
 
+# formatting to match other dataset
 weatherData$time <- as.character(gsub("T", " ", weatherData$time))
 weatherData$time <- as.POSIXlt(weatherData$time, format="%Y-%m-%d %H:%M")
-
-# formatting to match other dataset
 second(weatherData$time) <- second(weatherData$time+5)
 weatherData <- mutate(weatherData, Day = date(weatherData$time))
 weatherData <- mutate(weatherData, Hour = hour(weatherData$time))
-
 
 
 
@@ -89,7 +72,7 @@ weatherData <- mutate(weatherData, Hour = hour(weatherData$time))
 #### Bortle Data #####
 ######################
 
-kish <- read.csv("Data/Kish11-9.csv")
+kish <- read.csv("Data/Kish11-9.csv") #to be updated with new data
 kish <- kish[-c(1:39), 1:5]
 kish <- kish[-c(1:2), ]
 colnames(kish) <- c("UTCTime", "LocalTime", "TempC", "Volts", "MagArcsec2")
@@ -98,6 +81,7 @@ colnames(kish) <- c("UTCTime", "LocalTime", "TempC", "Volts", "MagArcsec2")
 kish <- mutate(kish, Day = date(kish$LocalTime))
 kish <- mutate(kish, Hour = hour(kish$LocalTime))
 
+#format to correct types
 kish$UTCTime <- as.ts(kish$UTCTime)
 kish$LocalTime <- as.ts(kish$LocalTime)
 kish$TempC <- as.numeric(kish$TempC)
