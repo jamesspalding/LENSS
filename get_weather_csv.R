@@ -20,15 +20,15 @@ get_weather_csv <- function(
     return()
   }
 
-  link <- paste(
-    "https://archive-api.open-meteo.com/v1/archive?latitude=", lat,
+  link <- paste0(
+    "https://archive-api.open-meteo.com/v1/archive",
+    "?latitude=", lat,
     "&longitude=", lon,
     "&start_date=", start,
     "&end_date=", end,
     "&hourly=", var,
     "&timezone=", tz,
-    "&format=", format,
-    sep = ""
+    "&format=", format
   )
   req <- request(link)
   resp <- req_perform(req)
