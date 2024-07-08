@@ -32,5 +32,5 @@ get_weather_csv <- function(
   )
   req <- request(link)
   resp <- req_perform(req)
-  cat(resp_body_string(resp), file = path, sep = "\n")
+  cat(resp_body_string(resp), file = path, sep = "")
 }
