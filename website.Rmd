@@ -1,0 +1,32 @@
+---
+title: "Insert Title Here"
+author: "James Spalding and Angel Castaneda"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Explain $\frac{\text{mag}}{\text{arcsec}^2}$ and SQM readings
+
+Magnitude/arcseconds squared are really cool and stuff and this is all placeholder text.
+
+*Maybe put some images here?*
+
+More placeholder text!!!
+
+## Explain bortle scale, light pollution, and effect of cloud cover
+
+Wow even more placeholder text.
+
+*show off graph of all dates*
+
+*show gif of all dates*
+
+## section for shiny app to run
+
+*Insert awesome app here*
+
+Explain key findings within app.
+
