@@ -36,13 +36,13 @@ ui <- dashboardPage(
           actionButton("leftArrow", "<"),
           actionButton("rightArrow", ">"),
 
-          
+
           div(tags$label("Graph Options"),
               checkboxInput("midCheck", "Display midnight line", value = TRUE),
-              checkboxInput("moonCheck", "Display moon phase", value = TRUE), 
+              checkboxInput("moonCheck", "Display moon phase", value = TRUE),
               checkboxInput("sqmCheck", "Display maximum SQM reading"),
-              
-              
+
+
               radioButtons("selection", label = "Overlays",
                            choices = list("Bortle scale" = "bortle",
                                           "Cloud cover" = "cloud",
@@ -70,7 +70,14 @@ ui <- dashboardPage(
 
       )
 
-    )
+    ),
+    tags$footer(
+      "under agpl 3.0 license; view source",
+      tags$a(
+        href = "https://github.com/jamesspalding/LENSS",
+        "here",
+        target = "_blank"),
+      style = "text-align: center;")
   )
 )
 
@@ -82,12 +89,12 @@ ui <- dashboardPage(
 server <- function(input, output, session) {
 
   input_date <- reactiveVal(as.Date(FIRSTDAY))
-  
+
   bortleCheck <- reactive({input$selection == "bortle"})
-  
+
   cloudCheck <- reactive({input$selection == "cloud"})
 
-  
+
   #Slider
   observeEvent(input$sliderDate, {
     input_date(as.Date(input$sliderDate))
