@@ -31,7 +31,7 @@ if (paste0(getwd(), "/.venv/bin/python") != py_config()[1]) {
 }
 
 # Custom Functions
-source_python("moon.py")
+source_python("moon_phase.py")
 source_python("animateFrames.py")
 source("buildGraph.R")
 source("makeGif.R")
@@ -57,16 +57,25 @@ if (exists("minInterval") == FALSE) {
 ########################
 
 # get weather data
-if((is.integer(which(grepl("weatherData.csv", list.files("./Data")))) && length(which(grepl("weather", list.files("./Data")))) == 0L)==F){
-  #check for existing weather file, and removing if found
-  file.remove(paste0(getwd(),"/Data/",list.files("./Data")[which(grepl("weather", list.files("./Data")))]))
-}
 
-system2(command = "./weather.sh",
-        args = c(as.character(FIRSTDAY), as.character(LASTDAY+1))) #gets necessary data
+# if((is.integer(which(grepl("weatherData.csv", list.files("./Data")))) && length(which(grepl("weather", list.files("./Data")))) == 0L)==F){
+#   #check for existing weather file, and removing if found
+#   file.remove(paste0(getwd(),"/Data/",list.files("./Data")[which(grepl("weather", list.files("./Data")))]))
+# }
+# 
+# system2(command = "./weather.sh",
+#         args = c(as.character(FIRSTDAY), as.character(LASTDAY+1))) #gets necessary data
+# 
+# weatherData <- read_csv("Data/weatherData.csv", 
+#                          skip = 2)
 
-weatherData <- read_csv("Data/weatherData.csv", 
-                         skip = 2)
+source("get_weather_csv.R")
+get_weather_csv(FIRSTDAY, LASTDAY+1)
+weather_csv <- paste0(getwd(), "/Data/weather_", FIRSTDAY, "_", LASTDAY+1, ".csv")
+weatherData <- read.csv(weather_csv, skip = 2)
+
+weatherData$time <- as.character(gsub("T", " ", weatherData$time))
+weatherData$time <- as.POSIXlt(weatherData$time, format="%Y-%m-%d %H:%M")
 
 # formatting to match other dataset
 second(weatherData$time) <- second(weatherData$time+5)
@@ -119,7 +128,7 @@ dayLength <- 204 / detailLevel
 #joining datasets
 kish <- kish %>% 
   left_join(weatherData, by = c("Day", "Hour")) %>%
-  select(-c("time", "Day", "temperature_2m (°C)",
-            "cloud_cover_low (%)", "cloud_cover_mid (%)", "cloud_cover_high (%)"))
+  select(-c("time", "Day", "temperature_2m...C.",
+            "cloud_cover_low....", "cloud_cover_mid....", "cloud_cover_high...."))
 
-kish$`cloud_cover (%)` <- kish$`cloud_cover (%)`/100
+kish$cloud_cover.... <- kish$cloud_cover..../100

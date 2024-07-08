@@ -121,7 +121,7 @@ buildGraph <- function(givenDate, midLine = FALSE, sqm = FALSE, bortle = FALSE, 
   ##### Cloud overlay #####
   # mutually exclusive with bortle overlay
   if(cloud == TRUE){
-    cloudHours <- plotDate$`cloud_cover (%)`[seq(1, 68, by=4)]
+    cloudHours <- plotDate$cloud_cover....[seq(1, 68, by=4)]
     cloudHours <- cloudHours/2.5
     
     # for(i in 0:16){
