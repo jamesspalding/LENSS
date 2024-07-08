@@ -19,6 +19,5 @@ de421.bsp
 # virtualenv
 /.venv
 
-# deployment
-deployapp.R
-/rsconnect
+# website
+website.html
