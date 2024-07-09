@@ -4,6 +4,10 @@
 FROM alpine:latest
 WORKDIR /app
 
+RUN apk add --no-cache tzdata
+ENV TZ=America/Chicago
+RUN cp /usr/share/zoneinfo/America/Chicago /etc/localtime
+
 # system font needed for generating graphs
 RUN apk add --no-cache make font-noto-all
 COPY Makefile ./
