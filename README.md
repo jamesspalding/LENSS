@@ -11,7 +11,7 @@ into presentable graphs.
 
 - [ ] Write mag/arcsecond^2 about section
 - [x] Moon phase library
-- [ ] Set up skyfield for twilight calculation times at -18° angle
+- [x] Set up skyfield for twilight calculation times at -18° angle
 - [ ] Pipe data through scripts to automatically create .csv files
 - [ ] Create website
 - [x] Integrate open-meteo.com weather API
@@ -22,7 +22,8 @@ into presentable graphs.
 - [x] Implement categorization of data according to [bortle scale](https://en.wikipedia.org/wiki/Bortle_scale)
 - [x] Make interactive graphs with R shiny
 - [x] Redo X scale to reference actual time (instead of fixed numbers) to account for daylight savings
-- [x] Improve efficiency?
+- [x] Improve efficiency
+- [ ] Use Google API to automatically grab new data files when updated
 
 #### Website
 
