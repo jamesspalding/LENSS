@@ -133,5 +133,5 @@ server <- function(input, output, session) {
 
 }
 
-options(shiny.port = 1897)
+options(shiny.port = 1897, shiny.host = "0.0.0.0")
 shinyApp(ui = ui, server = server)
