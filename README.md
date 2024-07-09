@@ -27,34 +27,44 @@ into presentable graphs.
 
 #### Website
 
-- "What is twilight?" section
-- Map of light pollution in US
+- [ ] "What is twilight?" section
+- [ ] Map of light pollution in US
 
-## Outputs
+## Data over time
+
+Given a start and end date, data can be visualized in both image and gif format as shown below:
 
 ![](https://github.com/jamesspalding/LENSS/blob/main/Images/combinedPlot.png)
 
-Plot of all dates
-
 ![](https://github.com/jamesspalding/LENSS/blob/main/Images/Animation.gif)
 
-Animation of all dates
+## buildGraph Function
+
+This function is the heart of the shiny app. It takes various interactive parameters to make graphs with LENSS data.
+
+```
+buildGraph(date, midLine = FALSE, sqm = FALSE, bortle = FALSE, cloud = FALSE, phase = FALSE, save = FALSE, size = c(3201,1800))
+```
+
+Outputs from changing parameters are shown in the following section.
+
+### Outputs
 
 ![](https://github.com/jamesspalding/LENSS/blob/main/Images/plot_2023-10-23_mid_maxsqm.png)
 
-Plot with max SQM reading and midnight both labeled
+Plot with max SQM reading and midnight both labeled. ```buildGraph("2023-10-23", sqm = TRUE, midLine = TRUE)```
 
 ![](https://github.com/jamesspalding/LENSS/blob/main/Images/plot_2023-10-23_emoji.png)
 
-Plot with moon phase displayed
+Plot with moon phase displayed. ```buildGraph("2023-10-23", phase = TRUE)```
 
 ![](https://github.com/jamesspalding/LENSS/blob/main/Images/plot_2023-10-10_mid_maxsqm_bortle.png)
 
-Plot with Bortle scale overlaid
+Plot with Bortle scale overlaid. ```buildGraph("2023-10-10", bortle = TRUE)```
 
 ![](https://github.com/jamesspalding/LENSS/blob/main/Images/plot_2023-10-23_cloudcover.png)
 
-Plot with cloud cover overlaid
+Plot with cloud cover overlaid. ```buildGraph("2023-10-23", cloud = TRUE)```
 
 ## LICENSES
 
