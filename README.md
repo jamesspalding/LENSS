@@ -76,5 +76,7 @@ Plot with cloud cover overlaid. ```buildGraph("2023-10-23", cloud = TRUE)```
 
 ## LICENSES
 
-This code is under the GNU AGPL 3.0 open source license. Our data is provided by
-our LENSS project sensor and is under the ODbL open sharealike database license.
+This code is under the GNU AGPL 3.0 open source license. Our light data is
+provided by [GLAS Education](https://glaseducation.org) under the ODbL open
+database license, and our weather data is provided by [open
+meteo](https://open-meteo.com) under the CC-BY 4.0 license.
