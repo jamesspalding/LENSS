@@ -4,6 +4,15 @@
 
 > Shiny webapp for visualizing light sensor data
 
+## INSTALLATION
+
+The simplest way to run our app is with docker:
+
+```sh
+docker pull acsquared/lenss:latest
+docker run -p 1897:1897 acsquared/lenss:latest
+```
+
 ## TODOs
 
 #### Àngel
