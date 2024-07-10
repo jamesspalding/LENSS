@@ -13,6 +13,7 @@ apt:
 lint:
 	reuse lint
 	./lint.R
+	hadolint Dockerfile
 
 renv:
 	R -e 'install.packages("renv", repos = "https://cloud.r-project.org")'
