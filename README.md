@@ -27,9 +27,11 @@ docker run -p 1897:1897 acsquared/lenss:latest
 #### James
 
 - [x] Filter out <4.8 volts
-- [x] Implement categorization of data according to [bortle scale](https://en.wikipedia.org/wiki/Bortle_scale)
+- [x] Implement categorization of data according to [bortle
+      scale](https://en.wikipedia.org/wiki/Bortle_scale)
 - [x] Make interactive graphs with R shiny
-- [x] Redo X scale to reference actual time (instead of fixed numbers) to account for daylight savings
+- [x] Redo X scale to reference actual time (instead of fixed numbers) to
+      account for daylight savings
 - [x] Improve efficiency
 - [ ] Use Google API to automatically grab new data files when updated
 
@@ -40,7 +42,8 @@ docker run -p 1897:1897 acsquared/lenss:latest
 
 ## Data over time
 
-Given a start and end date, data can be visualized in both image and gif format as shown below:
+Given a start and end date, data can be visualized in both image and gif format
+as shown below:
 
 ![](https://github.com/jamesspalding/LENSS/blob/main/Images/combinedPlot.png)
 
@@ -48,7 +51,8 @@ Given a start and end date, data can be visualized in both image and gif format 
 
 ## buildGraph Function
 
-This function is the heart of the shiny app. It takes various interactive parameters to make graphs with LENSS data.
+This function is the heart of the shiny app. It takes various interactive
+parameters to make graphs with LENSS data.
 
 ```
 buildGraph(date, midLine = FALSE, sqm = FALSE, bortle = FALSE, cloud = FALSE, phase = FALSE, save = FALSE, size = c(3201,1800))
