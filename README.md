@@ -54,7 +54,7 @@ as shown below:
 This function is the heart of the shiny app. It takes various interactive
 parameters to make graphs with LENSS data.
 
-```
+```r
 buildGraph(date, midLine = FALSE, sqm = FALSE, bortle = FALSE, cloud = FALSE, phase = FALSE, save = FALSE, size = c(3201,1800))
 ```
 
@@ -64,19 +64,35 @@ Outputs from changing parameters are shown in the following section.
 
 ![](https://github.com/jamesspalding/LENSS/blob/main/Images/plot_2023-10-23_mid_maxsqm.png)
 
-Plot with max SQM reading and midnight both labeled. ```buildGraph("2023-10-23", sqm = TRUE, midLine = TRUE)```
+Plot with max SQM reading and midnight both labeled:
+
+```r
+buildGraph("2023-10-23", sqm = TRUE, midLine = TRUE)
+```
 
 ![](https://github.com/jamesspalding/LENSS/blob/main/Images/plot_2023-10-23_emoji.png)
 
-Plot with moon phase displayed. ```buildGraph("2023-10-23", phase = TRUE)```
+Plot with moon phase displayed:
+
+```r
+buildGraph("2023-10-23", phase = TRUE)
+```
 
 ![](https://github.com/jamesspalding/LENSS/blob/main/Images/plot_2023-10-10_mid_maxsqm_bortle.png)
 
-Plot with Bortle scale overlaid. ```buildGraph("2023-10-10", bortle = TRUE)```
+Plot with Bortle scale overlaid:
+
+```r
+buildGraph("2023-10-10", bortle = TRUE)
+```
 
 ![](https://github.com/jamesspalding/LENSS/blob/main/Images/plot_2023-10-23_cloudcover.png)
 
-Plot with cloud cover overlaid. ```buildGraph("2023-10-23", cloud = TRUE)```
+Plot with cloud cover overlaid:
+
+```r
+buildGraph("2023-10-23", cloud = TRUE)
+```
 
 ## LICENSES
 
