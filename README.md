@@ -2,8 +2,7 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-only -->
 # LENSS Graphs Site
 
-Project to turn LENSS data from [GLAS Education](https://glaseducation.org)
-into presentable graphs.
+> Shiny webapp for visualizing light sensor data
 
 ## TODOs
 
