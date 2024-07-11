@@ -3,6 +3,8 @@ title: "Insert Title Here"
 author: "James Spalding and Angel Castaneda"
 output: html_document
 ---
+<!-- SPDX-FileCopyrightText: 2024 GLAS Education <angel@glaseducation.org> -->
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)

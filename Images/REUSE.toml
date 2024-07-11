@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: 2024 GLAS Education <angel@glaseducation.org>
+# SPDX-License-Identifier: AGPL-3.0-only
+
+version = 1
+
+[[annotations]]
+# By using '*' instead of '**', only the files directly inside docs are covered.
+path = "**"
+SPDX-FileCopyrightText = "GLAS Education <angel@glaseducation.org>"
+SPDX-License-Identifier = "AGPL-3.0-only"
